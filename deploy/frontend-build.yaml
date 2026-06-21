@@ -1,0 +1,19 @@
+steps:
+  - name: gcr.io/cloud-builders/docker
+    args:
+      - build
+      - '--build-arg'
+      - 'NEXT_PUBLIC_API_URL=${_API_URL}'
+      - '--build-arg'
+      - 'NEXT_PUBLIC_GOOGLE_CLIENT_ID=${_CLIENT_ID}'
+      - '-t'
+      - '${_REGION}-docker.pkg.dev/$PROJECT_ID/duckpond/web:latest'
+      - '.'
+images:
+  - '${_REGION}-docker.pkg.dev/$PROJECT_ID/duckpond/web:latest'
+substitutions:
+  _REGION: europe-west2
+  _API_URL: ''
+  _CLIENT_ID: ''
+options:
+  logging: CLOUD_LOGGING_ONLY
