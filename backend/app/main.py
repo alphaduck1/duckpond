@@ -51,7 +51,11 @@ def _startup():
     init_db()
 
 
+# NOTE: Cloud Run's front end (GFE) intercepts the literal path "/healthz"
+# before it reaches the container, so we also expose it under "/api/healthz",
+# which provably reaches the app. "/healthz" is kept for local/other runtimes.
 @app.get("/healthz")
+@app.get("/api/healthz")
 def healthz():
     return {"ok": True}
 

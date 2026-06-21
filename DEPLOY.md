@@ -82,7 +82,7 @@ Add the printed **web URL** to your OAuth client's *Authorized JavaScript origin
 
 ### Verify it's healthy
 ```bash
-curl "$API_URL/healthz"            # -> {"ok":true}
+curl "$API_URL/api/healthz"        # -> {"ok":true}  (Cloud Run's GFE swallows the bare /healthz)
 ```
 Sign in, complete a mission, then as Callum open the dashboard → "Run agents now"
 to see the self-improvement queue populate.
