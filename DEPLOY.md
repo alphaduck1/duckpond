@@ -11,6 +11,11 @@ with the `gcloud` CLI installed and logged in to your Google account. Total time
 
 ## 0. One-time prep
 
+> **gcloud needs Python 3.10–3.14.** Recent Cloud SDK refuses to run on the macOS
+> system Python 3.9. If you hit "gcloud failed to load … Python 3.9 … no longer
+> supported", install a supported Python and point gcloud at it:
+> `export CLOUDSDK_PYTHON=/path/to/python3.12` (Google ships no bundled Python for macOS).
+
 ```bash
 gcloud auth login
 gcloud config set project YOUR_PROJECT_ID
@@ -31,8 +36,10 @@ Copy the **Client ID**.
 
 ## 3. Create the database
 ```bash
+# NOTE: --edition=ENTERPRISE is required — new instances default to Enterprise
+# Plus, which rejects shared-core tiers like db-f1-micro.
 gcloud sql instances create duckpond-db \
-  --database-version=POSTGRES_16 --tier=db-f1-micro --region=europe-west2
+  --database-version=POSTGRES_16 --edition=ENTERPRISE --tier=db-f1-micro --region=europe-west2
 gcloud sql databases create duckpond --instance=duckpond-db
 gcloud sql users create duck --instance=duckpond-db --password=PICK_A_PASSWORD
 ```
@@ -77,6 +84,15 @@ bash deploy/deploy.sh   # redeploys with caching wired in
 ## 8. Final click
 Add the printed **web URL** to your OAuth client's *Authorized JavaScript origins*
 (step 2). Open the web URL, sign in with your company Google account — you're live.
+
+> **Cloud Run gives the web service two URLs** (e.g. `…-HASH-REGION.a.run.app` and
+> `…-PROJECTNUM.REGION.run.app`). Whichever you actually open must be in BOTH the
+> OAuth *Authorized JavaScript origins* AND the backend `CORS_ORIGINS` (or sign-in
+> fails with `origin_mismatch` / "Failed to fetch"). Adding both aliases is safest.
+>
+> **Access control:** `ALLOWED_HOSTED_DOMAIN` restricts to a whole Workspace domain.
+> To lock sign-in to specific accounts instead, set `ALLOWED_EMAILS=a@x.com,b@x.com`
+> (takes precedence over the domain check).
 
 ---
 
