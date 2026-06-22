@@ -19,5 +19,8 @@ def init_db() -> None:
 
 
 def get_session():
-    with Session(engine) as session:
+    # expire_on_commit=False so ORM attributes stay populated after commit();
+    # otherwise Pydantic v2 .model_dump() reads a cleared __dict__ and serialises
+    # required columns as None (3-validation-error 500 on login/persona/etc).
+    with Session(engine, expire_on_commit=False) as session:
         yield session
