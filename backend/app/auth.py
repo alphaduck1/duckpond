@@ -36,14 +36,21 @@ def verify_google_credential(credential: str) -> dict:
     if not info.get("email_verified"):
         raise HTTPException(status_code=401, detail="Email not verified")
 
-    # Company-domain restriction (hosted domain claim 'hd').
-    if settings.allowed_hosted_domain:
+    # Access control. A specific email allow-list (ALLOWED_EMAILS) is the
+    # strictest and takes precedence: only those exact addresses may sign in.
+    # Otherwise fall back to the company hosted-domain restriction.
+    if settings.allowed_email_list:
+        if email not in settings.allowed_email_list:
+            raise HTTPException(
+                status_code=403,
+                detail="This app is restricted to specific accounts.",
+            )
+    elif settings.allowed_hosted_domain:
         hd = info.get("hd", "")
         domain_ok = hd == settings.allowed_hosted_domain or email.endswith(
             "@" + settings.allowed_hosted_domain
         )
-        email_ok = email in settings.allowed_email_list
-        if not (domain_ok or email_ok):
+        if not domain_ok:
             raise HTTPException(
                 status_code=403,
                 detail="This app is restricted to your company Google domain.",
