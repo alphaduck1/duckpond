@@ -8,15 +8,22 @@
 set -euo pipefail
 
 # ---- EDIT THESE -------------------------------------------------
+# SERVICE_PREFIX namespaces every Cloud Run service + Cloud SQL instance so v2
+# deploys as a completely separate stack. Default 'duckpond' = the live v1.
+# For v2:  export SERVICE_PREFIX=duckpond-v2   (see deploy/V2.md)
+SERVICE_PREFIX="${SERVICE_PREFIX:-duckpond}"
 PROJECT_ID="${PROJECT_ID:?set PROJECT_ID}"
 REGION="${REGION:-europe-west2}"
-SQL_INSTANCE="${SQL_INSTANCE:-duckpond-db}"          # Cloud SQL instance name
+SQL_INSTANCE="${SQL_INSTANCE:-${SERVICE_PREFIX}-db}"  # Cloud SQL instance name
 DB_NAME="${DB_NAME:-duckpond}"
 DB_USER="${DB_USER:-duck}"
 HOSTED_DOMAIN="${HOSTED_DOMAIN:?set HOSTED_DOMAIN e.g. bikeluggage.co.uk}"
 ADMIN_EMAILS="${ADMIN_EMAILS:?set ADMIN_EMAILS e.g. callum@bikeluggage.co.uk}"
 GOOGLE_CLIENT_ID="${GOOGLE_CLIENT_ID:?set GOOGLE_CLIENT_ID}"
 # ----------------------------------------------------------------
+
+API_SERVICE="${SERVICE_PREFIX}-api"
+WEB_SERVICE="${SERVICE_PREFIX}-web"
 
 AR_REPO="duckpond"
 CONN_NAME="${PROJECT_ID}:${REGION}:${SQL_INSTANCE}"
@@ -38,16 +45,16 @@ echo "==> Building backend image"
 gcloud builds submit backend --tag "${IMG_BASE}/api:latest" --project "$PROJECT_ID"
 
 echo "==> Deploying backend (Cloud Run) with Cloud SQL connection"
-gcloud run deploy duckpond-api \
+gcloud run deploy "$API_SERVICE" \
   --image "${IMG_BASE}/api:latest" \
   --region "$REGION" --project "$PROJECT_ID" \
   --platform managed --allow-unauthenticated \
   --add-cloudsql-instances "$CONN_NAME" \
   ${VPC_CONNECTOR:+--vpc-connector "$VPC_CONNECTOR"} \
-  --set-secrets "DATABASE_URL=duckpond-db-url:latest,JWT_SECRET=duckpond-jwt:latest,ANTHROPIC_API_KEY=duckpond-anthropic:latest" \
+  --set-secrets "DATABASE_URL=${SERVICE_PREFIX}-db-url:latest,JWT_SECRET=${SERVICE_PREFIX}-jwt:latest,ANTHROPIC_API_KEY=${SERVICE_PREFIX}-anthropic:latest" \
   --set-env-vars "GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_ID},ALLOWED_HOSTED_DOMAIN=${HOSTED_DOMAIN},ADMIN_EMAILS=${ADMIN_EMAILS},TTS_ENABLED=true,AGENT_CRON_TOKEN=${AGENT_CRON_TOKEN:-change-me}${REDIS_URL:+,REDIS_URL=$REDIS_URL}"
 
-API_URL=$(gcloud run services describe duckpond-api --region "$REGION" --project "$PROJECT_ID" --format 'value(status.url)')
+API_URL=$(gcloud run services describe "$API_SERVICE" --region "$REGION" --project "$PROJECT_ID" --format 'value(status.url)')
 echo "    API live at: $API_URL"
 
 # ---- Frontend ----
@@ -58,15 +65,15 @@ gcloud builds submit frontend \
   --config deploy/frontend-build.yaml
 
 echo "==> Deploying frontend (Cloud Run)"
-gcloud run deploy duckpond-web \
+gcloud run deploy "$WEB_SERVICE" \
   --image "${IMG_BASE}/web:latest" \
   --region "$REGION" --project "$PROJECT_ID" \
   --platform managed --allow-unauthenticated
 
-WEB_URL=$(gcloud run services describe duckpond-web --region "$REGION" --project "$PROJECT_ID" --format 'value(status.url)')
+WEB_URL=$(gcloud run services describe "$WEB_SERVICE" --region "$REGION" --project "$PROJECT_ID" --format 'value(status.url)')
 
 echo "==> Updating backend CORS to allow the web origin"
-gcloud run services update duckpond-api --region "$REGION" --project "$PROJECT_ID" \
+gcloud run services update "$API_SERVICE" --region "$REGION" --project "$PROJECT_ID" \
   --update-env-vars "CORS_ORIGINS=${WEB_URL}"
 
 echo ""
