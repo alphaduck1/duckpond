@@ -30,3 +30,17 @@ def test_no_codex_toolguide_remains():
     for ms in DOC["missions"].values():
         for m in ms:
             assert "toolGuide" not in m
+
+
+def test_missions_endpoint_has_sessions_and_glossary():
+    """Task 2.1: /api/missions serves the v2 shape (sessions + glossary, no
+    toolGuide). The route is public, so no auth override is needed."""
+    from fastapi.testclient import TestClient
+    from app import cache
+    from app.main import app
+
+    cache.invalidate("missions")  # avoid a stale v1-shaped cache entry
+    body = TestClient(app).get("/api/missions").json()
+    assert "sessions" in body
+    assert "glossary" in body
+    assert "toolGuide" not in body

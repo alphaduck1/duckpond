@@ -14,6 +14,7 @@ Routes:
 """
 import json
 import io
+import logging
 from pathlib import Path
 from datetime import datetime
 from fastapi import FastAPI, Depends, HTTPException, Header
@@ -26,11 +27,16 @@ from .db import init_db, get_session
 from .models import (
     User, Progress, Feedback, Proposal, AgentRun,
     UserOut, CompleteIn, ProgressOut, FeedbackOut, TTSIn, LoginIn, PersonaIn,
+    SandboxRunIn,
 )
 from .auth import verify_google_credential, issue_session_jwt, current_user
 from . import agents as agent_engine
 from . import cache
 from . import guardrails
+from . import sandbox
+from .content_schema import validate_content
+
+logger = logging.getLogger("duckpond")
 
 settings = get_settings()
 app = FastAPI(title="The Duck Pond API", version="1.0.0")
@@ -46,9 +52,41 @@ app.add_middleware(
 MISSIONS_PATH = Path(__file__).parent / "missions.json"
 
 
+def _load_missions() -> dict:
+    """Load missions.json from disk (uncached)."""
+    return json.loads(MISSIONS_PATH.read_text()) if MISSIONS_PATH.exists() else {}
+
+
+def _session_by_mission() -> dict[str, int]:
+    """Map every mission id -> its session number, derived from missions.json.
+
+    A shared mission id (e.g. 'reservoir', 'memory_all') appears under several
+    personas with the same session, so a flat id->session map is unambiguous.
+    """
+    out: dict[str, int] = {}
+    data = _load_missions()
+    for ms in data.get("missions", {}).values():
+        for m in ms:
+            sid = m.get("session")
+            if isinstance(sid, int):
+                out[m["id"]] = sid
+    return out
+
+
 @app.on_event("startup")
 def _startup():
     init_db()
+    # Validate the v2 content shape on load. We log, we do NOT crash — bad
+    # content should never take the API down; it just needs to be visible.
+    try:
+        errs = validate_content(_load_missions())
+        if errs:
+            logger.warning(
+                "missions.json failed v2 content validation (%d issue(s)): %s",
+                len(errs), " | ".join(errs[:20]),
+            )
+    except Exception as e:  # never let validation itself break startup
+        logger.warning("content validation could not run: %s", e)
 
 
 # NOTE: Cloud Run's front end (GFE) intercepts the literal path "/healthz"
@@ -125,12 +163,16 @@ def complete(body: CompleteIn, user: User = Depends(current_user),
             Progress.mission_id == body.mission_id,
         )
     ).first()
+    # Derive the session from the content so analytics can group by week.
+    mission_session = _session_by_mission().get(body.mission_id)
     if not exists:
         session.add(Progress(
-            user_email=user.email, persona=body.persona, mission_id=body.mission_id
+            user_email=user.email, persona=body.persona, mission_id=body.mission_id,
+            session=mission_session,
         ))
     session.add(Feedback(
         user_email=user.email, persona=body.persona, mission_id=body.mission_id,
+        session=mission_session,
         confidence=body.confidence, stars=body.stars, applied=body.applied,
         quiz=body.quiz, note=body.note,
     ))
@@ -175,6 +217,55 @@ def dashboard(user: User = Depends(current_user),
     completed = {}
     for p in progress:
         completed.setdefault(p.persona, set()).add(f"{p.user_email}:{p.mission_id}")
+
+    # Derive session-per-mission from the content (single source of truth).
+    sess_of = _session_by_mission()
+
+    # by_session: per session, how many completions and how many low-confidence.
+    by_session: dict[str, dict] = {}
+    for p in progress:
+        sid = sess_of.get(p.mission_id)
+        if sid is None:
+            continue
+        bucket = by_session.setdefault(str(sid), {"completed": 0, "low_conf": 0})
+        bucket["completed"] += 1
+    for f in feedback:
+        sid = sess_of.get(f.mission_id)
+        if sid is None:
+            continue
+        bucket = by_session.setdefault(str(sid), {"completed": 0, "low_conf": 0})
+        if f.confidence == "no":
+            bucket["low_conf"] += 1
+
+    # heatmap: one cell per feedback row — persona × mission, confidence + stars.
+    heatmap = [
+        {
+            "persona": f.persona,
+            "mission_id": f.mission_id,
+            "confidence": f.confidence,
+            "stars": f.stars,
+        }
+        for f in feedback
+    ]
+
+    # stuck: a learner is stuck on a mission if they said confidence == 'no',
+    # or they have repeated (>= 2) low-mastery (<= 1 star) attempts on it.
+    by_user_mission: dict[tuple, list] = {}
+    for f in feedback:
+        by_user_mission.setdefault((f.user_email, f.persona, f.mission_id), []).append(f)
+    stuck = []
+    for (email, persona, mid), rows in by_user_mission.items():
+        said_no = any(r.confidence == "no" for r in rows)
+        low_star = [r for r in rows if r.stars <= 1]
+        repeated_low = len(low_star) >= 2
+        if not (said_no or repeated_low):
+            continue
+        reason = "confidence=no" if said_no else "repeated low stars"
+        name = users.get(email).name if users.get(email) else email
+        stuck.append({
+            "name": name, "persona": persona, "mission_id": mid, "reason": reason,
+        })
+
     result = {
         "progress": [
             {"persona": k, "count": len(v)} for k, v in completed.items()
@@ -182,9 +273,30 @@ def dashboard(user: User = Depends(current_user),
         "feedback": [f.model_dump() for f in fb_out],
         "applied_total": sum(1 for f in feedback if f.applied),
         "not_yet_total": sum(1 for f in feedback if f.confidence == "no"),
+        "by_session": by_session,
+        "heatmap": heatmap,
+        "stuck": stuck,
     }
     cache.set("dashboard", result, ttl=30)
     return result
+
+
+# ------------------------------------------------------------- sandbox
+@app.get("/api/sandbox/templates")
+def sandbox_templates(user: User = Depends(current_user)):
+    """The catalogue of read-only build-sandbox templates. Auth required;
+    available to every learner (not admin-only)."""
+    return {"templates": sandbox.list_templates()}
+
+
+@app.post("/api/sandbox/run")
+def sandbox_run(body: SandboxRunIn, user: User = Depends(current_user)):
+    """Run a scaffolded workflow safely (read-only) and return its steps +
+    a TRACE prompt. Auth required; not admin-only. The engine never writes."""
+    try:
+        return sandbox.run_template(body.template_id, body.params or {}, user.email)
+    except ValueError as e:
+        raise HTTPException(status_code=404, detail=str(e))
 
 
 # ------------------------------------------------ self-improvement agents

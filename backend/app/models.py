@@ -33,6 +33,9 @@ class Progress(SQLModel, table=True):
     user_email: str = Field(index=True)
     persona: str = Field(index=True)            # which mission-set
     mission_id: str = Field(index=True)
+    # v2: which session (1..4) this mission belongs to, for analytics.
+    # Nullable + additive — old rows simply carry NULL.
+    session: Optional[int] = Field(default=None, index=True)
     completed_at: datetime = Field(default_factory=datetime.utcnow)
 
 
@@ -43,6 +46,8 @@ class Feedback(SQLModel, table=True):
     user_email: str = Field(index=True)
     persona: str = Field(index=True)
     mission_id: str = Field(index=True)
+    # v2: which session (1..4) this mission belongs to, for analytics. Nullable.
+    session: Optional[int] = Field(default=None, index=True)
     confidence: str = "yes"        # yes | nearly | no
     stars: int = 0                 # 0..3 mastery
     applied: bool = False          # did they do it on real work?
@@ -133,3 +138,8 @@ class LoginIn(BaseModel):
 
 class PersonaIn(BaseModel):
     persona: str
+
+
+class SandboxRunIn(BaseModel):
+    template_id: str
+    params: dict = {}
