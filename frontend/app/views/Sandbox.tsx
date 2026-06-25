@@ -302,11 +302,8 @@ export default function Sandbox({ mission, trace, onComplete }: SandboxProps) {
             </div>
             <TraceWidget
               trace={trace}
-              onScored={(score: any) =>
-                // TraceWidget reports a score; treat a truthy `ready` flag (or any truthy score)
-                // as "fit to act". Defensive across whatever shape the widget settles on.
-                setTraceReady(score == null ? false : score.ready !== undefined ? !!score.ready : !!score)
-              }
+              // TraceWidget reports the pass-count (0..5). "Fit to act" only when all 5 pass.
+              onScored={(score: number) => setTraceReady(score === 5)}
             />
 
             {/* ── "Would one prompt have been faster?" reflection (§F.5) ── */}

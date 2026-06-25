@@ -2,18 +2,47 @@
 import { useEffect, useState, useRef } from "react";
 import { api } from "@/lib/api";
 import { speak, stopSpeak } from "@/lib/voice";
+import SessionHub from "@/app/views/SessionHub";
+import Journey from "@/app/views/Journey";
+import Sandbox from "@/app/views/Sandbox";
+import AdminDashboard from "@/app/views/AdminDashboard";
+import TraceWidget from "@/app/components/TraceWidget";
+import { GlossaryProvider } from "@/app/components/Glossary";
 
 declare global { interface Window { google?: any; } }
 
 const initials = (n: string) => n.split(" ").map((w) => w[0]).join("").slice(0, 2).toUpperCase();
 
+// Sandbox templates that the backend actually serves. A kind:"build" mission only
+// opens the interactive Sandbox if its build.template is one of these; the other
+// build missions (self-improvement-engine, agents-py) fall back to the standard
+// Mission walkthrough.
+const SANDBOX_TEMPLATES = new Set(["content-batch", "page-loop", "fitment-verify"]);
+
+// The learner's own per-mission feedback isn't returned by /api/progress, so we
+// remember it locally (keyed by persona) for the My Journey confidence trend.
+function fbKey(persona: string) { return `duckpond.fb.${persona}`; }
+function loadLocalFeedback(persona: string): Record<string, { confidence?: string; stars?: number }> {
+  try { return JSON.parse(localStorage.getItem(fbKey(persona)) || "{}"); } catch { return {}; }
+}
+function saveLocalFeedback(persona: string, mid: string, fb: { confidence?: string; stars?: number }) {
+  try {
+    const all = loadLocalFeedback(persona);
+    all[mid] = { confidence: fb.confidence, stars: fb.stars };
+    localStorage.setItem(fbKey(persona), JSON.stringify(all));
+  } catch {}
+}
+
+type View = "pick" | "sessions" | "journey" | "mission" | "dash";
+
 export default function Home() {
   const [user, setUser] = useState<any>(null);
   const [loading, setLoading] = useState(true);
-  const [data, setData] = useState<any>(null); // {people,trace,toolGuide,missions}
-  const [view, setView] = useState<"pick" | "map" | "mission" | "dash">("pick");
+  const [data, setData] = useState<any>(null); // {sessions,people,trace,glossary,missions}
+  const [view, setView] = useState<View>("pick");
   const [persona, setPersona] = useState<string | null>(null);
   const [completed, setCompleted] = useState<string[]>([]);
+  const [feedbackByMission, setFeedbackByMission] = useState<Record<string, { confidence?: string; stars?: number }>>({});
   const [activeMid, setActiveMid] = useState<string | null>(null);
   const [readAloud, setReadAloud] = useState(false);
   const [err, setErr] = useState("");
@@ -36,7 +65,8 @@ export default function Home() {
   useEffect(() => {
     if (user && persona) {
       api.progress(persona).then((p) => setCompleted(p.completed)).catch(() => {});
-      setView("map");
+      setFeedbackByMission(loadLocalFeedback(persona));
+      setView("sessions");
     }
   }, [user, persona]);
 
@@ -44,7 +74,15 @@ export default function Home() {
   if (!user) return <Login onUser={setUser} clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID || ""} setErr={setErr} err={err} />;
   if (!data) return <Splash msg="Loading the pond…" />;
 
-  const people = data.people, missions = data.missions, trace = data.trace, toolGuide = data.toolGuide;
+  const people = data.people, missions = data.missions, trace = data.trace,
+    sessions = data.sessions, glossary = data.glossary;
+
+  const activeMission = persona && activeMid
+    ? missions[persona].find((x: any) => x.id === activeMid)
+    : null;
+  const isSandboxMission =
+    activeMission?.kind === "build" &&
+    SANDBOX_TEMPLATES.has(activeMission?.build?.template);
 
   async function pickPersona(id: string) {
     setPersona(id);
@@ -54,36 +92,46 @@ export default function Home() {
     setReadAloud((s) => { const n = !s; try { localStorage.setItem("duckpond.read", n ? "on" : "off"); } catch {} if (!n) stopSpeak(); return n; });
   }
   async function onComplete(mid: string, fb: any) {
+    if (persona) saveLocalFeedback(persona, mid, fb);
     try {
       await api.complete({ persona, mission_id: mid, ...fb });
       const p = await api.progress(persona!);
       setCompleted(p.completed);
+      if (persona) setFeedbackByMission(loadLocalFeedback(persona));
     } catch (e: any) { setErr(e.message); }
-    setView("map");
+    setView("sessions");
   }
 
   return (
-    <div>
+    <GlossaryProvider glossary={glossary}>
       <Header user={user} persona={persona} readAloud={readAloud} toggleRead={toggleRead}
         onSwitch={() => { setPersona(null); setView("pick"); }}
         completed={completed} total={persona ? missions[persona].length : 0} />
       <main>
         {view === "pick" && <Pick people={people} onPick={pickPersona} />}
-        {view === "map" && persona && (
-          <Map persona={persona} people={people} missions={missions} completed={completed}
+        {view === "sessions" && persona && (
+          <SessionHub sessions={sessions} missions={missions} completed={completed} persona={persona}
             isAdmin={user.is_admin}
             onOpen={(mid: string) => { setActiveMid(mid); setView("mission"); }}
+            onJourney={() => setView("journey")}
             onDash={() => setView("dash")} />
         )}
-        {view === "mission" && persona && activeMid && (
-          <Mission m={missions[persona].find((x: any) => x.id === activeMid)} trace={trace}
-            toolGuide={toolGuide} readAloud={readAloud}
-            onBack={() => setView("map")} onComplete={onComplete} />
+        {view === "journey" && persona && (
+          <Journey sessions={sessions} missions={missions[persona]} completed={completed}
+            persona={persona} feedbackByMission={feedbackByMission as any} />
         )}
-        {view === "dash" && <Dashboard people={people} missions={missions} />}
+        {view === "mission" && persona && activeMission && (
+          isSandboxMission ? (
+            <Sandbox mission={activeMission} trace={trace} onComplete={onComplete} />
+          ) : (
+            <Mission m={activeMission} trace={trace} readAloud={readAloud}
+              onBack={() => setView("sessions")} onComplete={onComplete} />
+          )
+        )}
+        {view === "dash" && <AdminDashboard people={people} missions={missions} />}
       </main>
-      <footer className="foot"><div className="wrap">The Duck Pond 🦆 · grounded in your real Project Lists tasks · Claude + Codex · your data is saved centrally</div></footer>
-    </div>
+      <footer className="foot"><div className="wrap">The Duck Pond 🦆 · grounded in your real tasks · built on Claude · your data is saved centrally</div></footer>
+    </GlossaryProvider>
   );
 }
 
@@ -167,35 +215,8 @@ function Pick({ people, onPick }: any) {
   );
 }
 
-function Map({ persona, people, missions, completed, isAdmin, onOpen, onDash }: any) {
-  const p = people[persona], list = missions[persona], nextIdx = completed.length;
-  return (
-    <div className="wrap pad">
-      <div className="secthead">
-        <div><div className="eyebrow">Your missions</div><h2>Real tasks, {p.name} — done with AI, validated by you</h2></div>
-        {isAdmin && <button className="btn ghost sm" onClick={onDash}>📊 Team dashboard</button>}
-      </div>
-      <div className="missions">
-        {list.map((m: any, i: number) => {
-          const done = completed.includes(m.id), locked = i > nextIdx;
-          return (
-            <div key={m.id} className={"mission" + (locked ? " locked" : "")}>
-              <div className="m-head" onClick={() => !locked && onOpen(m.id)} style={{ cursor: locked ? "default" : "pointer" }}>
-                <div className="m-no" style={{ color: m.colour, borderColor: m.colour }}>{done ? "✓" : i + 1}</div>
-                <div className="m-meta"><div className="k">{m.phase}</div><h3>{m.title}</h3>
-                  <div className="real">📌 {m.real.length > 96 ? m.real.slice(0, 96) + "…" : m.real}</div></div>
-                <div className="m-right">{locked ? <span className="mono" style={{ fontSize: 11, color: "#8B94A4" }}>🔒</span> : <span style={{ color: m.colour }}>{done ? "Revisit" : "Start ▸"}</span>}</div>
-              </div>
-            </div>
-          );
-        })}
-      </div>
-    </div>
-  );
-}
-
-function Mission({ m, trace, toolGuide, readAloud, onBack, onComplete }: any) {
-  const [traceOn, setTraceOn] = useState<any>({});
+function Mission({ m, trace, readAloud, onBack, onComplete }: any) {
+  const [traceScore, setTraceScore] = useState(0);
   const [spotPick, setSpotPick] = useState<string | null>(null);
   const [qi, setQi] = useState<any>({});
   const [applyText, setApplyText] = useState("");
@@ -203,7 +224,6 @@ function Mission({ m, trace, toolGuide, readAloud, onBack, onComplete }: any) {
   const [fb, setFb] = useState<string | null>(null);
   const [fbText, setFbText] = useState("");
   const [speaking, setSpeaking] = useState(false);
-  const tg = { ...toolGuide._default, ...(toolGuide[m.id] || {}) };
 
   const readScript = `Your real task. ${m.real}. Here's the idea: ${m.learn.concept}. ${m.learn.body}. To do it: ${m.steps.map((s: any) => s.h + ". " + s.p).join(" ")}`;
   function listen() { setSpeaking(true); speak(readScript, () => setSpeaking(false)); }
@@ -214,9 +234,9 @@ function Mission({ m, trace, toolGuide, readAloud, onBack, onComplete }: any) {
   const quizScore = m.quiz.reduce((s: number, q: any, i: number) => s + (qi[i] === q.a ? 1 : 0), 0);
   const spotDone = spotPick !== null;
   const spotCorrect = spotDone && m.spot[spotPick!]?.correct;
-  const traceReady = !m.trace || Object.keys(traceOn).filter((k) => traceOn[k]).length === 5;
+  const traceReady = traceScore === 5;
   const applyMet = !m.apply || applyText.trim().length >= 25 || applySkipped;
-  const canFinish = quizDone && spotDone && (!m.trace || traceReady) && applyMet;
+  const canFinish = quizDone && spotDone && traceReady && applyMet;
   const stars = (spotCorrect ? 1 : 0) + (quizScore === m.quiz.length ? 1 : 0) + (m.apply && applyText.trim().length >= 25 && !applySkipped ? 1 : 0);
 
   return (
@@ -238,25 +258,21 @@ function Mission({ m, trace, toolGuide, readAloud, onBack, onComplete }: any) {
         <p style={{ fontSize: 14, color: "#AEB6C4" }}>{m.learn.body}</p>
       </div>
 
-      <div className="phase">② Do it — Claude or Codex?</div>
-      <div className="tools">
-        <div className="tool claude"><div className="th"><span className="tdot" />🟠 Claude</div><p>{tg.claude.use}</p><span className="pick">{tg.claude.pick}</span></div>
-        <div className="tool codex"><div className="th"><span className="tdot" />🔵 Codex</div><p>{tg.codex.use}</p><span className="pick">{tg.codex.pick}</span></div>
-      </div>
+      <div className="phase">② Do it — in Claude</div>
+      {m.doIt && (
+        <div className="card" style={{ marginBottom: 16, borderColor: "#3E4556" }}>
+          <div style={{ fontSize: 11, letterSpacing: ".1em", textTransform: "uppercase", color: "#F4A623", fontFamily: "Space Grotesk", fontWeight: 600, marginBottom: 6 }}>🟠 Do this in Claude</div>
+          <p style={{ fontSize: 13.5, color: "#D7DCE4" }}>{m.doIt}</p>
+        </div>
+      )}
       {m.steps.map((s: any, i: number) => (<div className="stepcard" key={i}><div className="sn">{s.n}</div><h4>{s.h}</h4><p>{s.p}</p></div>))}
-      <div className="promptbox"><span className="lbl">▸ Paste into Claude (or adapt for Codex)</span>
+      <div className="promptbox"><span className="lbl">▸ Paste into Claude</span>
         <button className="cp" onClick={() => navigator.clipboard?.writeText(m.prompt)}>Copy</button>{m.prompt}</div>
 
-      {m.trace && <>
-        <div className="phase" style={{ marginTop: 24 }}>③ Validate — run TRACE</div>
-        <div className="traceboard">{trace.map(([k, name, desc, col]: any) => (
-          <button key={k} className={"trow" + (traceOn[k] ? " on" : "")} onClick={() => setTraceOn({ ...traceOn, [k]: !traceOn[k] })}>
-            <div className="tk" style={{ background: col }}>{k}</div><div className="tt"><h5>{name}</h5><span>{desc}</span></div>
-            <div className="chk">{traceOn[k] ? "✓" : ""}</div></button>))}
-        </div>
-      </>}
+      <div className="phase" style={{ marginTop: 24 }}>③ Validate — run TRACE</div>
+      <TraceWidget trace={trace} onScored={setTraceScore} />
 
-      <div className="phase" style={{ marginTop: 24 }}>{m.trace ? "④" : "③"} Spot the good one</div>
+      <div className="phase" style={{ marginTop: 24 }}>④ Spot the good one</div>
       <p style={{ fontSize: 13.5, color: "#AEB6C4", marginBottom: 4 }}>{m.spot.q}</p>
       <div className="spot">{["good", "bad"].map((side) => {
         const o = m.spot[side], picked = spotPick === side;
@@ -266,7 +282,7 @@ function Mission({ m, trace, toolGuide, readAloud, onBack, onComplete }: any) {
           <div className="txt">{o.txt}</div><div className="verdict" style={{ color: o.correct ? "#33B06A" : "#D8503A" }}>{o.verdict}</div></button>;
       })}</div>
 
-      <div className="phase" style={{ marginTop: 24 }}>{m.trace ? "⑤" : "④"} Quick check</div>
+      <div className="phase" style={{ marginTop: 24 }}>⑤ Quick check</div>
       {m.quiz.map((q: any, i: number) => (
         <div className="quiz" key={i}><div className="qq">{q.q}</div>
           {q.opts.map((o: string, oi: number) => {
@@ -280,7 +296,7 @@ function Mission({ m, trace, toolGuide, readAloud, onBack, onComplete }: any) {
       ))}
 
       {m.apply && <>
-        <div className="phase" style={{ marginTop: 24 }}>{m.trace ? "⑥" : "⑤"} Now do it on your real work</div>
+        <div className="phase" style={{ marginTop: 24 }}>⑥ Now do it on your real work</div>
         <div className="apply"><div className="at">🔧 Your turn — for real</div><p className="aq">{m.apply.q}</p>
           <textarea placeholder={m.apply.placeholder} value={applyText} onChange={(e) => { setApplyText(e.target.value); if (applySkipped) setApplySkipped(false); }} />
           <div className="meta">{applyText.trim().length >= 25 ? <span className="ok">✓ Logged — this makes you faster tomorrow</span> : <span className="count">{applyText.trim().length}/25 — a real attempt unlocks completion</span>}
@@ -305,87 +321,5 @@ function Mission({ m, trace, toolGuide, readAloud, onBack, onComplete }: any) {
         </div>
       </div> : <p style={{ fontSize: 12.5, color: "#8B94A4", textAlign: "center", marginTop: 18 }}>Finish the steps above to complete this mission.</p>}
     </div></div>
-  );
-}
-
-function Dashboard({ people, missions }: any) {
-  const [d, setD] = useState<any>(null);
-  const [err, setErr] = useState("");
-  const [props, setProps] = useState<any[]>([]);
-  const [running, setRunning] = useState(false);
-  const [msg, setMsg] = useState("");
-
-  async function loadProps() { try { setProps(await api.proposals("pending")); } catch {} }
-  useEffect(() => { api.dashboard().then(setD).catch((e) => setErr(e.message)); loadProps(); }, []);
-
-  async function runNow() {
-    setRunning(true); setMsg("");
-    try { const r = await api.runAgents(); setMsg(r.summary || "Done"); await loadProps(); }
-    catch (e: any) { setMsg(e.message); }
-    setRunning(false);
-  }
-  async function decide(id: number, decision: "approved" | "rejected") {
-    await api.decideProposal(id, decision);
-    setProps((p) => p.filter((x) => x.id !== id));
-  }
-
-  if (err) return <div className="wrap pad"><p style={{ color: "#D8503A" }}>{err}</p></div>;
-  if (!d) return <div className="wrap pad"><p style={{ color: "#8B94A4" }}>Loading team data…</p></div>;
-  return (
-    <div className="wrap pad">
-      <div className="secthead"><div><div className="eyebrow">Oversight</div><h2>How the team's tracking</h2></div></div>
-      <div className="dash-grid">
-        <div className="stat"><div className="n">{d.feedback.length}</div><div className="l">Missions completed</div></div>
-        <div className="stat"><div className="n" style={{ color: "#33B06A" }}>{d.applied_total}</div><div className="l">Applied to real work</div></div>
-        <div className="stat"><div className="n" style={{ color: d.not_yet_total ? "#F4A623" : "#33B06A" }}>{d.not_yet_total}</div><div className="l">"Not yet" confidence</div></div>
-      </div>
-
-      {/* Self-improvement engine */}
-      <div className="secthead" style={{ marginTop: 30 }}>
-        <div><div className="eyebrow">Self-improvement engine</div><h2 style={{ fontSize: 20 }}>🤖 Proposals to review</h2></div>
-        <button className="btn sm" disabled={running} onClick={runNow}>{running ? "Running agents…" : "▶ Run agents now"}</button>
-      </div>
-      {msg && <p style={{ fontSize: 13, color: "#AEB6C4", marginBottom: 10 }}>{msg}</p>}
-      <p style={{ fontSize: 12.5, color: "#8B94A4", marginBottom: 12 }}>
-        Agents draft these automatically from the team's feedback + market research. Nothing goes live until you approve it — capability is not authorisation.
-      </p>
-      {props.length === 0 ? (
-        <div className="card"><p style={{ color: "#AEB6C4", fontSize: 13.5 }}>No pending proposals. Run the agents, or wait for tonight's automatic run.</p></div>
-      ) : (
-        props.map((p) => (
-          <div key={p.id} className="card" style={{ marginBottom: 12 }}>
-            <div style={{ display: "flex", justifyContent: "space-between", gap: 12, alignItems: "flex-start" }}>
-              <div style={{ flex: 1 }}>
-                <span className="pill" style={{ background: p.kind === "new_mission" ? "#33B06A" : p.kind === "insight" ? "#4C8DE8" : "#F2600C", color: "#fff", fontSize: 10 }}>{p.source_agent}</span>
-                <h4 style={{ fontFamily: "Space Grotesk", fontSize: 15, margin: "8px 0 4px" }}>{p.title}</h4>
-                <p style={{ fontSize: 12.5, color: "#AEB6C4" }}>{p.rationale}</p>
-              </div>
-              {p.kind !== "insight" && (
-                <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
-                  <button className="btn sm" onClick={() => decide(p.id, "approved")}>✓ Approve</button>
-                  <button className="btn ghost sm" onClick={() => decide(p.id, "rejected")}>Reject</button>
-                </div>
-              )}
-              {p.kind === "insight" && <button className="btn ghost sm" onClick={() => decide(p.id, "rejected")}>Dismiss</button>}
-            </div>
-          </div>
-        ))
-      )}
-
-      <div className="eyebrow" style={{ margin: "26px 0 11px" }}>What the feedback is telling us</div>
-      <div className="card">
-        {d.feedback.length === 0 ? <p style={{ color: "#AEB6C4" }}>No feedback yet.</p> :
-          d.feedback.slice().reverse().slice(0, 12).map((f: any, i: number) => {
-            const mm = missions[f.persona]?.find((x: any) => x.id === f.mission_id);
-            const conf: any = { yes: ["💪", "Confident"], nearly: ["🤔", "Nearly"], no: ["😅", "Not yet"] }[f.confidence] || ["•", ""];
-            return <div key={i} style={{ display: "flex", gap: 12, padding: "10px 0", borderBottom: "1px solid #323847" }}>
-              <div style={{ fontSize: 20 }}>{conf[0]}</div>
-              <div><div style={{ fontWeight: 600, fontFamily: "Space Grotesk", fontSize: 13.5 }}>{f.name} · {mm ? mm.title : f.mission_id}
-                <span style={{ color: "#8B94A4", fontWeight: 400 }}> · {conf[1]} · {"★".repeat(f.stars)}{f.applied ? " · ✓ applied" : ""}</span></div>
-                <div style={{ fontSize: 12.5, color: "#8B94A4" }}>{f.note ? "“" + f.note + "”" : "No note"}</div></div>
-            </div>;
-          })}
-      </div>
-    </div>
   );
 }

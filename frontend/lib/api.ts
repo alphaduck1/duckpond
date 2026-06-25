@@ -65,8 +65,38 @@ export const api = {
       await req(`/api/progress/reset?persona=${persona}`, { method: "POST" })
     ).json();
   },
-  async dashboard() {
+  // Richer v2 dashboard: in addition to {progress, feedback, applied_total,
+  // not_yet_total} it now returns by_session, heatmap and stuck (see AdminDashboard).
+  async dashboard(): Promise<{
+    progress: { persona: string; count: number }[];
+    feedback: any[];
+    applied_total: number;
+    not_yet_total: number;
+    by_session: Record<string, { completed: number; low_conf: number }>;
+    heatmap: { persona: string; mission_id: string; confidence: string; stars: number }[];
+    stuck: { name: string; persona: string; mission_id: string; reason: string }[];
+  }> {
     return (await req("/api/dashboard")).json();
+  },
+  // --- read-only build sandbox (auth required, NOT admin) ---
+  async sandboxTemplates(): Promise<{
+    templates: { id: string; title: string; persona: string; steps: string[]; editable: string[] }[];
+  }> {
+    return (await req("/api/sandbox/templates")).json();
+  },
+  async sandboxRun(
+    template_id: string,
+    params: Record<string, string>,
+  ): Promise<{
+    steps: { name: string; output: string; flagged: string[] }[];
+    trace_prompt: string;
+  }> {
+    return (
+      await req("/api/sandbox/run", {
+        method: "POST",
+        body: JSON.stringify({ template_id, params }),
+      })
+    ).json();
   },
   // --- self-improvement engine (admin) ---
   async runAgents() {
