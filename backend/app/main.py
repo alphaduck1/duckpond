@@ -163,16 +163,12 @@ def complete(body: CompleteIn, user: User = Depends(current_user),
             Progress.mission_id == body.mission_id,
         )
     ).first()
-    # Derive the session from the content so analytics can group by week.
-    mission_session = _session_by_mission().get(body.mission_id)
     if not exists:
         session.add(Progress(
             user_email=user.email, persona=body.persona, mission_id=body.mission_id,
-            session=mission_session,
         ))
     session.add(Feedback(
         user_email=user.email, persona=body.persona, mission_id=body.mission_id,
-        session=mission_session,
         confidence=body.confidence, stars=body.stars, applied=body.applied,
         quiz=body.quiz, note=body.note,
     ))
