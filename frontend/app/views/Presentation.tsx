@@ -22,8 +22,9 @@
  * Reuses the speak()/stopSpeak() read-aloud helpers from lib/voice and the
  * existing CSS tokens (--orange, --amber, --mute, etc).
  */
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, useRef } from "react";
 import { speak, stopSpeak } from "@/lib/voice";
+import { publish, subscribe } from "@/lib/presentSync";
 
 type Slide = {
   title: string;
@@ -39,6 +40,7 @@ type Deck = {
 };
 type Props = {
   deck: Deck;
+  sessionId: string;
   onExit: () => void;
   onStartMissions: () => void;
 };
@@ -84,12 +86,14 @@ function Body({ text }: { text: string }) {
   );
 }
 
-export default function Presentation({ deck, onExit, onStartMissions }: Props) {
+export default function Presentation({ deck, sessionId, onExit, onStartMissions }: Props) {
   const slides = deck?.slides || [];
   const total = slides.length;
   const [idx, setIdx] = useState(0);
-  const [notesOn, setNotesOn] = useState(true); // default ON for the presenter
+  const [notesOn, setNotesOn] = useState(true); // default ON for the presenter (single-screen)
   const [speaking, setSpeaking] = useState(false);
+  const [presenterOpen, setPresenterOpen] = useState(false);
+  const presenterWin = useRef<Window | null>(null);
 
   const cur = slides[idx];
   const isLast = idx === total - 1;
@@ -100,6 +104,29 @@ export default function Presentation({ deck, onExit, onStartMissions }: Props) {
     },
     [total],
   );
+
+  // Broadcast our slide so the popup presenter window follows; and follow it back.
+  useEffect(() => { publish(sessionId, idx); }, [idx, sessionId]);
+  useEffect(
+    () => subscribe((s) => {
+      if (s.sid === sessionId) setIdx((i) => (i === s.idx ? i : Math.min(Math.max(s.idx, 0), total - 1)));
+    }),
+    [sessionId, total],
+  );
+
+  // Open the speaker notes in a SEPARATE, synced window (the presenter console).
+  function openPresenter() {
+    const url = window.location.pathname + "?presenter=" + encodeURIComponent(sessionId);
+    const w = window.open(url, "duckpond-presenter", "width=920,height=700");
+    if (w) { presenterWin.current = w; setPresenterOpen(true); publish(sessionId, idx); }
+  }
+  // Notice if the presenter window is closed manually; close it when we exit.
+  useEffect(() => {
+    if (!presenterOpen) return;
+    const t = setInterval(() => { if (presenterWin.current?.closed) setPresenterOpen(false); }, 1000);
+    return () => clearInterval(t);
+  }, [presenterOpen]);
+  useEffect(() => () => { try { presenterWin.current?.close(); } catch {} }, []);
 
   // Stop any read-aloud whenever the slide changes or the view unmounts.
   useEffect(() => {
@@ -166,12 +193,21 @@ export default function Presentation({ deck, onExit, onStartMissions }: Props) {
         </div>
         <div className="present-bar-sp" />
         <button
-          className={"present-toggle" + (notesOn ? " on" : "")}
-          onClick={() => setNotesOn((v) => !v)}
-          title="Show/hide the presenter's speaker notes"
+          className={"present-toggle" + (presenterOpen ? " on" : "")}
+          onClick={openPresenter}
+          title="Open your speaker notes in a separate window, kept in sync with the slides — share/​project this window, read notes on the other"
         >
-          {notesOn ? "🗒 Speaker notes on" : "🗒 Speaker notes off"}
+          {presenterOpen ? "🖥 Presenter view open ↗" : "🖥 Presenter view"}
         </button>
+        {!presenterOpen && (
+          <button
+            className={"present-toggle" + (notesOn ? " on" : "")}
+            onClick={() => setNotesOn((v) => !v)}
+            title="Show/hide the presenter's speaker notes on this screen"
+          >
+            {notesOn ? "🗒 Notes on" : "🗒 Notes off"}
+          </button>
+        )}
         <button
           className={"present-toggle read" + (speaking ? " on" : "")}
           onClick={speaking ? hush : readNotes}
@@ -194,8 +230,13 @@ export default function Presentation({ deck, onExit, onStartMissions }: Props) {
         </div>
       </div>
 
-      {/* Speaker notes + demo panel (presenter-facing) */}
-      {notesOn && (
+      {/* Speaker notes + demo panel (presenter-facing). Hidden on this screen
+          when the separate presenter window is open, so this window stays clean
+          for projecting/screen-sharing — notes live in the other window. */}
+      {presenterOpen && (
+        <div className="present-audience-tag">🖥 Presenter view is open in a separate window · this screen is audience-only · notes &amp; controls are synced</div>
+      )}
+      {notesOn && !presenterOpen && (
         <div className="present-notes">
           {cur.demo && (
             <div className="present-demo">

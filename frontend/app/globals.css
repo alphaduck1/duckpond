@@ -404,3 +404,52 @@
     .present-foot{padding:12px 16px;gap:10px}
     .present-skip{display:none}
   }
+
+/* ---- Presenter view (separate synced window) ---- */
+.present-audience-tag{flex-shrink:0;text-align:center;font-size:12px;color:var(--mute);
+  padding:9px 16px;border-top:1px solid var(--line);background:rgba(76,141,232,.06)}
+.pc{position:fixed;inset:0;z-index:80;display:flex;flex-direction:column;background:var(--bg);color:var(--cloud);
+  font-family:'Inter',system-ui,sans-serif}
+.pc-empty{flex:1;display:grid;place-items:center;color:var(--mute);padding:40px;text-align:center}
+.pc-bar{display:flex;align-items:center;gap:12px;padding:12px 20px;border-bottom:1px solid var(--line);background:var(--bg2)}
+.pc-tag{font-family:'Space Grotesk';font-weight:700;font-size:11px;letter-spacing:.06em;text-transform:uppercase;
+  color:var(--amber);border:1px solid rgba(244,166,35,.4);border-radius:99px;padding:5px 11px;white-space:nowrap}
+.pc-deck{font-family:'Space Grotesk';font-weight:600;font-size:14px;color:var(--mute2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pc-bar-sp{flex:1}
+.pc-meta{display:flex;align-items:center;gap:14px;font-family:'Space Grotesk';font-weight:600}
+.pc-counter{font-size:14px;color:var(--cloud)}
+.pc-time{font-size:14px;color:var(--green)}
+.pc-clock{font-size:14px;color:var(--mute)}
+.pc-grid{flex:1;display:grid;grid-template-columns:1.5fr 1fr;gap:0;min-height:0}
+.pc-notes-col{display:flex;flex-direction:column;min-height:0;padding:20px 24px;overflow:auto;border-right:1px solid var(--line)}
+.pc-now-title{font-family:'Space Grotesk';font-weight:700;font-size:15px;color:var(--orange2);margin-bottom:14px}
+.pc-demo{background:rgba(76,141,232,.1);border:1px solid rgba(76,141,232,.4);border-radius:12px;padding:13px 15px;margin-bottom:16px}
+.pc-demo-h{font-family:'Space Grotesk';font-weight:700;font-size:11.5px;text-transform:uppercase;letter-spacing:.05em;color:var(--blue);margin-bottom:6px}
+.pc-demo p{font-size:14.5px;line-height:1.55;color:#D7E2F2}
+.pc-notes-h{display:flex;align-items:center;justify-content:space-between;gap:10px;
+  font-family:'Space Grotesk';font-weight:700;font-size:12px;text-transform:uppercase;letter-spacing:.05em;color:var(--mute);margin-bottom:10px}
+.pc-read{font-size:12px;font-weight:600;color:var(--mute);border:1px solid var(--line2);border-radius:99px;padding:5px 11px;white-space:nowrap}
+.pc-read:hover:not(:disabled){color:var(--cloud);border-color:var(--mute)}
+.pc-read.on{color:var(--red);border-color:rgba(216,80,58,.5);background:rgba(216,80,58,.08)}
+.pc-read:disabled{opacity:.4;cursor:not-allowed}
+.pc-notes{font-size:clamp(17px,2vw,21px);line-height:1.66;color:#E2E8F1;white-space:pre-wrap}
+.pc-side{display:flex;flex-direction:column;min-height:0;padding:20px 22px;overflow:auto;gap:10px;background:var(--bg2)}
+.pc-side-h{font-family:'Space Grotesk';font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--mute)}
+.pc-side-h.next{color:var(--amber);margin-top:8px}
+.pc-preview{background:var(--panel);border:1px solid var(--line2);border-radius:14px;padding:18px;text-align:center}
+.pc-preview-visual{font-size:38px;line-height:1;margin-bottom:8px}
+.pc-preview-title{font-family:'Space Grotesk';font-weight:700;font-size:18px;line-height:1.15;margin-bottom:10px;color:#fff}
+.pc-preview-body{font-size:12.5px;line-height:1.5;color:var(--mute2);display:grid;gap:4px;text-align:left}
+.pc-next{background:var(--panel);border:1px dashed var(--line2);border-radius:14px;padding:14px 16px}
+.pc-next-title{font-family:'Space Grotesk';font-weight:600;font-size:14.5px;color:var(--mute2);margin-bottom:4px}
+.pc-next-body{font-size:12px;color:var(--mute);line-height:1.45}
+.pc-next-end{font-size:12.5px;color:var(--mute);line-height:1.5}
+.pc-foot{display:flex;align-items:center;gap:14px;padding:13px 20px;border-top:1px solid var(--line);background:var(--bg2)}
+.pc-foot-hint{flex:1;text-align:center;font-size:11.5px;color:var(--mute)}
+.pc-nav{font-family:'Space Grotesk';font-weight:600;font-size:14px;color:var(--cloud);border:1px solid var(--line2);
+  border-radius:99px;padding:10px 18px;transition:.15s;white-space:nowrap}
+.pc-nav:hover:not(:disabled){border-color:var(--orange);color:var(--orange)}
+.pc-nav:disabled{opacity:.35;cursor:not-allowed}
+.pc-nav.primary{background:var(--orange);color:#fff;border-color:var(--orange)}
+.pc-nav.primary:hover:not(:disabled){background:var(--orange2);border-color:var(--orange2)}
+@media (max-width:760px){ .pc-grid{grid-template-columns:1fr} .pc-side{border-top:1px solid var(--line)} }

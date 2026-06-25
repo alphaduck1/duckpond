@@ -4,6 +4,7 @@ import { api } from "@/lib/api";
 import { speak, stopSpeak } from "@/lib/voice";
 import SessionHub from "@/app/views/SessionHub";
 import Presentation from "@/app/views/Presentation";
+import PresenterConsole from "@/app/views/PresenterConsole";
 import Journey from "@/app/views/Journey";
 import Sandbox from "@/app/views/Sandbox";
 import AdminDashboard from "@/app/views/AdminDashboard";
@@ -46,8 +47,17 @@ export default function Home() {
   const [feedbackByMission, setFeedbackByMission] = useState<Record<string, { confidence?: string; stars?: number }>>({});
   const [activeMid, setActiveMid] = useState<string | null>(null);
   const [presentSid, setPresentSid] = useState<string | null>(null); // session id being presented
+  // Popup presenter window (?presenter=<sid>) renders only the PresenterConsole.
+  // undefined = not yet checked (avoids a hydration flash).
+  const [presenterSid, setPresenterSid] = useState<string | null | undefined>(undefined);
   const [readAloud, setReadAloud] = useState(false);
   const [err, setErr] = useState("");
+
+  // Detect the popup presenter route once, on the client.
+  useEffect(() => {
+    try { setPresenterSid(new URLSearchParams(window.location.search).get("presenter")); }
+    catch { setPresenterSid(null); }
+  }, []);
 
   // restore session
   useEffect(() => {
@@ -72,6 +82,8 @@ export default function Home() {
     }
   }, [user, persona]);
 
+  if (presenterSid === undefined) return <Splash />;             // still checking the URL
+  if (presenterSid) return <PresenterConsole sid={presenterSid} />; // popup presenter window
   if (loading) return <Splash />;
   if (!user) return <Login onUser={setUser} clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID || ""} setErr={setErr} err={err} />;
   if (!data) return <Splash msg="Loading the pond…" />;
@@ -123,6 +135,7 @@ export default function Home() {
         {view === "present" && presentSid && presentation[presentSid] && (
           <Presentation
             deck={presentation[presentSid]}
+            sessionId={presentSid}
             onExit={() => { stopSpeak(); setView("sessions"); }}
             onStartMissions={() => {
               stopSpeak();
