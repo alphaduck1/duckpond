@@ -1,0 +1,1655 @@
+{
+  "sessions": {
+    "1": {
+      "week": 1,
+      "title": "What is this thing, really?",
+      "goal": "Demystify AI; install the validation reflex on day one; place Claude in the wider tool landscape.",
+      "concepts": [
+        "fluency≠truth",
+        "prompt→context→connector",
+        "agentic",
+        "right-tool",
+        "TRACE"
+      ]
+    },
+    "2": {
+      "week": 2,
+      "title": "Claude that acts — and the one rule",
+      "goal": "Go from talking about your data to working on it, safely.",
+      "concepts": [
+        "connectors hands-on",
+        "memory",
+        "the Reservoir read-only rule",
+        "PII discipline (the C in TRACE)"
+      ]
+    },
+    "3": {
+      "week": 3,
+      "title": "Stop repeating yourself",
+      "goal": "Learn the prompt-vs-skill-vs-build decision, and build your first skill.",
+      "concepts": [
+        "skill vs plugin vs connector",
+        "the decision rule",
+        "connecting a service",
+        "building a first skill"
+      ]
+    },
+    "4": {
+      "week": 4,
+      "title": "Agents working together — and how to trust them",
+      "goal": "Understand and build a small multi-agent / loop workflow; cement judgment with the full TRACE capstone.",
+      "concepts": [
+        "multi-agent workflows",
+        "loops",
+        "when not to",
+        "the TRACE capstone",
+        "human-in-the-loop oversight"
+      ]
+    }
+  },
+  "people": {
+    "abbie": {
+      "name": "Abbie",
+      "role": "Marketing",
+      "colour": "#E7654A",
+      "admin": false
+    },
+    "emyr": {
+      "name": "Emyr",
+      "role": "Marketing & Branding",
+      "colour": "#C0578F",
+      "admin": false
+    },
+    "immy": {
+      "name": "Immy",
+      "role": "Customer Service",
+      "colour": "#4C8DE8",
+      "admin": false
+    },
+    "callum": {
+      "name": "Callum",
+      "role": "Founder · Oversight",
+      "colour": "#F4A623",
+      "admin": true
+    },
+    "yas": {
+      "name": "Yas",
+      "role": "Engineer · Coach",
+      "colour": "#33B06A",
+      "expert": true
+    }
+  },
+  "trace": [
+    [
+      "T",
+      "Traceable",
+      "Did it actually query Shopify/BigQuery, or just describe what it would do?",
+      "#F2600C"
+    ],
+    [
+      "R",
+      "Real",
+      "Are the SKUs, orders, prices and numbers genuine and findable?",
+      "#F4A623"
+    ],
+    [
+      "A",
+      "Accurate to intent",
+      "Did it answer the exact question you asked?",
+      "#4C8DE8"
+    ],
+    [
+      "C",
+      "Contained",
+      "Read-only where it should be? No customer PII pasted in? No Reservoir write?",
+      "#9A6BD8"
+    ],
+    [
+      "E",
+      "Enough to act?",
+      "Would you publish it / send it / make the call on it as-is?",
+      "#33B06A"
+    ]
+  ],
+  "glossary": {
+    "LLM / model": {
+      "short": "Predicts the next likely words",
+      "analogy": "A brilliant young sheepdog that doesn't know your farm yet"
+    },
+    "Agentic": {
+      "short": "AI that can act, not just answer",
+      "analogy": "A dog that rounds the sheep up, not just barks"
+    },
+    "Connector": {
+      "short": "A live login into a real system",
+      "analogy": "The key to a field's gate"
+    },
+    "Context": {
+      "short": "The specifics you give it to work from",
+      "analogy": "Walking the dog round the field first"
+    },
+    "Memory": {
+      "short": "Context it keeps between chats",
+      "analogy": "The farm logbook in the barn"
+    },
+    "Skill": {
+      "short": "A saved, reusable way to do a job",
+      "analogy": "A trained command you taught once"
+    },
+    "Plugin": {
+      "short": "A bolt-on capability",
+      "analogy": "A new machine on the farm"
+    },
+    "Multi-agent workflow": {
+      "short": "Split a job, run parts, then check",
+      "analogy": "The whole farm team at harvest"
+    },
+    "Loop": {
+      "short": "Repeat a step until a condition is met",
+      "analogy": "Counting the flock through the gate until all in"
+    },
+    "TRACE": {
+      "short": "The 5-point output review",
+      "analogy": "Checking the flock at the gate before you shut it"
+    },
+    "The Reservoir": {
+      "short": "Shared BigQuery alphaduck-dr2, read-only",
+      "analogy": "The shared water trough the whole farm drinks from"
+    },
+    "Right tool": {
+      "short": "Claude first; specialists when needed",
+      "analogy": "Don't plough with the sheepdog — bring the tractor"
+    },
+    "Model tier": {
+      "short": "Opus/Sonnet/Haiku — strength vs speed/cost",
+      "analogy": "Different breeds for different jobs"
+    },
+    "Token": {
+      "short": "The unit AI reads/writes in — and bills by",
+      "analogy": "A unit of feed the dog burns"
+    },
+    "Context window": {
+      "short": "How much it can hold at once",
+      "analogy": "How much the dog keeps in its head before it forgets the far corner"
+    },
+    "Raw→staging→core→mart": {
+      "short": "Warehouse layers from source to decision-ready",
+      "analogy": "Muddy paddock → washed → barn → farm-shop shelf"
+    },
+    "Prompt injection": {
+      "short": "Hidden instructions inside data the AI reads",
+      "analogy": "A stranger sneaking a whistle into the field"
+    },
+    "PII": {
+      "short": "Personal data (name, address, card…) — never paste",
+      "analogy": "Private livestock that never leaves the farm gate"
+    }
+  },
+  "missions": {
+    "abbie": [
+      {
+        "id": "a1",
+        "phase": "Session 2 · Claude that acts",
+        "colour": "#33B06A",
+        "title": "Find out what marketing data you can actually reach",
+        "real": "From your Notion: 'I need to establish exactly what product sales data I have to play with — it shapes the marketing strategy.'",
+        "learn": {
+          "concept": "Agentic AI vs just asking",
+          "body": "Plain GPT talks from memory. Agentic Claude uses connectors to actually look inside Shopify and BigQuery and act on real data. Same confident tone either way — so you must always check what it really did."
+        },
+        "steps": [
+          {
+            "n": "Step 1",
+            "h": "Ask what you can see",
+            "p": "Get Claude to list the connectors active for you and, in plain English, what each can reach."
+          },
+          {
+            "n": "Step 2",
+            "h": "Pin down sales data",
+            "p": "Specifically ask what product-sales data is available across Shopify (both stores) and BigQuery."
+          }
+        ],
+        "prompt": "What connectors are active for me, and in plain English what marketing and product-sales data can each one reach across BikeLuggage, MotoPlanet and BigQuery? Show me, don't just tell me.",
+        "spot": {
+          "q": "You ask 'how are tank bags selling?' Two answers come back.",
+          "good": {
+            "txt": "\"I queried Shopify orders for the last 30 days. Tank bags: 42 units across BL+MP. Here are the orders I counted.\"",
+            "correct": true,
+            "verdict": "Real query, shows its working — checkable."
+          },
+          "bad": {
+            "txt": "\"Tank bags are selling well, a strong category driven by seasonal touring demand.\"",
+            "correct": false,
+            "verdict": "Plausible, but it never looked. A guess dressed as data."
+          }
+        },
+        "quiz": [
+          {
+            "q": "Why can't you trust an answer just because it sounds confident?",
+            "opts": [
+              "Confidence and correctness are unrelated — it may have guessed",
+              "Confident answers are always right"
+            ],
+            "a": 0,
+            "ex": "It predicts what an answer <b>looks like</b>. You verify by checking the source, never the tone."
+          }
+        ],
+        "apply": {
+          "q": "In Claude Desktop, run the prompt above, then paste back ONE real data source it told you it can reach (e.g. 'Shopify orders — BikeLuggage'). Seeing it for yourself is the point.",
+          "placeholder": "Paste one real connector/data source Claude listed for you…"
+        },
+        "keep": {
+          "label": "data-check prompt",
+          "desc": "Reuse this any time you're not sure whether Claude is using real data or guessing.",
+          "text": "Before you answer: which connector and data did you use, and show me the actual records so I can check. If you didn't look anything up, say so."
+        },
+        "session": 2,
+        "tier": "core",
+        "kind": "standard",
+        "doIt": "Do this task here. Claude is connected to your real Shopify, BigQuery and Notion — so it works on actual orders and data, drafts in your voice, and you can validate what it really did."
+      },
+      {
+        "id": "a2",
+        "phase": "Session 3 · Stop repeating yourself",
+        "colour": "#4C8DE8",
+        "title": "Build the Searchanise synonyms list — with real SKUs",
+        "real": "Straight from your Notion: 'Searchanise > synonyms > provide context of bikes/brands/SKUs to refine (o>0 etc), build a GPT prompt for the task with context source files.'",
+        "learn": {
+          "concept": "Context beats clever wording",
+          "body": "The single biggest lever on output quality is context. Give Claude the real brands, bikes and SKU quirks (like o vs 0) and it produces a usable synonyms list instead of generic guesses."
+        },
+        "steps": [
+          {
+            "n": "Step 1",
+            "h": "Give it the real context",
+            "p": "Tell Claude the brands you sell for, common bike-name variations, and SKU quirks (o vs 0, spacing)."
+          },
+          {
+            "n": "Step 2",
+            "h": "Ask for the synonyms list",
+            "p": "Have it draft synonym groups for search, grounded in your actual product range — and explain each group."
+          },
+          {
+            "n": "Step 3",
+            "h": "Make it show sources",
+            "p": "Ask which products/terms it based each synonym group on, so you can verify it didn't invent any."
+          }
+        ],
+        "prompt": "Help me build a Searchanise synonyms list for BikeLuggage. Use our real brands and product range (pull from Shopify), include common bike-name variations and SKU quirks like 'o' vs '0'. Group the synonyms, explain each group, and show me the products each group is based on so I can check them.",
+        "spot": {
+          "q": "Claude returns 30 synonym groups, beautifully formatted.",
+          "good": {
+            "txt": "\"Here are 18 groups, each tied to products I found in your catalogue — see the SKU list under each.\"",
+            "correct": true,
+            "verdict": "Grounded in real products you can check."
+          },
+          "bad": {
+            "txt": "\"Here are 30 groups covering all common motorcycle luggage search terms.\"",
+            "correct": false,
+            "verdict": "No link to your real range — likely padded with generic terms."
+          }
+        },
+        "quiz": [
+          {
+            "q": "Your synonyms list looks great but cites no products. Go or No-Go?",
+            "opts": [
+              "Go — it reads well",
+              "No-Go — no source to check it against"
+            ],
+            "a": 1,
+            "ex": "No traceable source = unverified. Ask it to tie each group to real SKUs before you use it."
+          }
+        ],
+        "apply": {
+          "q": "Run it on ONE real product category you own (tank bags, panniers, tail tidies…). Paste back 2 synonym groups Claude tied to real SKUs — and note any it couldn't source.",
+          "placeholder": "e.g. 'tank bag' group → tied to E09, TR10, TR15… / one group had no SKU so I dropped it"
+        },
+        "keep": {
+          "label": "Searchanise synonyms prompt",
+          "desc": "Your grounded synonyms builder — reuse it whenever the search list needs refreshing.",
+          "text": "Build a Searchanise synonyms list for [category]. Use our real product range (pull from Shopify), include bike-name variations and SKU quirks like 'o' vs '0'. Group them, explain each, and show the SKUs each group is based on so I can verify. Flag any group you can't tie to a real product."
+        },
+        "session": 3,
+        "tier": "core",
+        "kind": "standard",
+        "doIt": "Do it in Claude — draft and ground the synonyms list here — Claude reads your real Shopify range so the groups tie to real SKUs."
+      },
+      {
+        "id": "reservoir",
+        "phase": "Session 2 · Claude that acts",
+        "colour": "#14161C",
+        "expert": true,
+        "title": "The one rule that protects the whole business",
+        "real": "Your BigQuery — the Digital Reservoir — is the single source of truth behind every report.",
+        "learn": {
+          "concept": "Multi-agent & orchestration, the short version",
+          "body": "Big jobs get split across specialised agents — a Researcher finds, an Analyst reads data, a Writer drafts, a Reviewer checks — coordinated by an Orchestrator (the 'team lead' agent). You don't build these by hand, but knowing the roles helps you ask for the right help and spot which step went wrong."
+        },
+        "steps": [
+          {
+            "n": "Read freely",
+            "h": "Reading the Reservoir is safe and encouraged",
+            "p": "Ask it anything in plain English — Claude writes the query. This is how Marketing and CS get grounded data."
+          },
+          {
+            "n": "Never write",
+            "h": "Your account CAN write. That is not permission.",
+            "p": "Capability is not authorisation. A bad write corrupts every report for everyone — not just your work."
+          },
+          {
+            "n": "If it offers to write — STOP",
+            "h": "That's the exact moment the rule exists for",
+            "p": "Don't let Claude change, insert, update, delete or 'fix' anything in the Reservoir. Route it to Yas."
+          }
+        ],
+        "prompt": "From our BigQuery data, what were last month's top-selling products on MotoPlanet? Show me the query and the tables you used — read only, do not change anything.",
+        "spot": {
+          "q": "Claude finishes a data task and says it can 'tidy up' a table for you in BigQuery.",
+          "good": {
+            "txt": "\"I can read it and flag what looks off, but I won't change anything — a write to the Reservoir goes through Yas.\"",
+            "correct": true,
+            "verdict": "Correct — reads, flags, refuses to write."
+          },
+          "bad": {
+            "txt": "\"Sure — I'll update those rows now to fix them for you.\"",
+            "correct": false,
+            "verdict": "This is the breach. Stop and route to Yas."
+          }
+        },
+        "quiz": [
+          {
+            "q": "Your account technically CAN write to the Reservoir. So you may…",
+            "opts": [
+              "Write — it lets you",
+              "Nothing changes: capability isn't authorisation. Read only; writes go to Yas"
+            ],
+            "a": 1,
+            "ex": "<b>Capability is not authorisation.</b> The system allowing it is not the same as being permitted."
+          },
+          {
+            "q": "An 'orchestrator' agent…",
+            "opts": [
+              "Does every task itself",
+              "Splits a big task, assigns each piece to the right agent, assembles the result"
+            ],
+            "a": 1,
+            "ex": "Like a pit-crew chief — it coordinates specialists rather than doing it all alone."
+          }
+        ],
+        "apply": {
+          "q": "Run the read-only Reservoir prompt. Paste back the query/tables it showed you — and confirm it did NOT offer to change anything (if it did, that's the lesson).",
+          "placeholder": "e.g. 'Showed query against orders table, read-only, no write offered' OR 'it offered to tidy a table — I declined'"
+        },
+        "keep": {
+          "label": "Reservoir read rule",
+          "desc": "The rule that protects every report in the business. Keep it visible.",
+          "text": "Read the Reservoir freely — ask in plain English, have Claude write the read-only query and show it. NEVER let it write: no change, insert, update, delete or 'fix'. If it offers to write, stop and route to Yas. Capability is not authorisation."
+        },
+        "session": 2,
+        "tier": "core",
+        "kind": "standard",
+        "doIt": "Do it in Claude — read the Reservoir in plain English here — Claude writes the read-only query and shows it."
+      },
+      {
+        "id": "skills",
+        "phase": "Session 3 · Stop repeating yourself",
+        "colour": "#1F6F4A",
+        "expert": true,
+        "title": "Turn your best prompt into a reusable Skill",
+        "real": "You've been collecting 'keep this' prompts all the way through. A Skill is how you stop re-typing them — your team already runs a 'master marketing prompt' and the Alpha Duck CS assistant; those are Skills in the making.",
+        "learn": {
+          "concept": "What a Skill actually is",
+          "body": "A Skill is a saved, reusable instruction set you can run again and again without rewriting it — like a saved recipe for a job you do often. In Claude you save it as a Project/custom instruction; in Codex it's a reusable script or command. Prompt = one-off. Skill = the same job, done consistently, every time."
+        },
+        "steps": [
+          {
+            "n": "Step 1",
+            "h": "Pick a job you repeat",
+            "p": "Choose something you do weekly that must come out consistent — a customer reply format, the performance report, a product-copy template."
+          },
+          {
+            "n": "Step 2",
+            "h": "Claude or Codex?",
+            "p": "If it's drafting/validating on your real data → save it as a Claude Project/Skill. If it's code or automation that runs the same way each time → Codex."
+          },
+          {
+            "n": "Step 3",
+            "h": "Bake the check in",
+            "p": "A good Skill carries its own validation — 'always show the source/order used' — so it stays trustworthy when reused."
+          }
+        ],
+        "prompt": "Help me turn this prompt into a reusable Skill: [paste one of your 'keep this' prompts]. Tell me whether it belongs in Claude (as a Project/saved instruction) or Codex (as a script), what inputs it needs each time, and what validation check it should always run before I trust its output.",
+        "spot": {
+          "q": "You do a one-off press release. Someone says 'let's build a Skill for it.'",
+          "good": {
+            "txt": "\"It's a one-off — just prompt it. Skills are for jobs we repeat and need consistent.\"",
+            "correct": true,
+            "verdict": "Right — don't over-build. Prompt the one-offs."
+          },
+          "bad": {
+            "txt": "\"Yes, let's build a custom Skill and a script for this single release.\"",
+            "correct": false,
+            "verdict": "Overkill. A Skill earns its keep only on frequent, consistent work."
+          }
+        },
+        "quiz": [
+          {
+            "q": "When is it worth turning a prompt into a Skill?",
+            "opts": [
+              "For anything tricky",
+              "When the job is frequent AND must come out consistent",
+              "Never — prompts are always enough",
+              "Only for engineers"
+            ],
+            "a": 1,
+            "ex": "Frequent + consistency-critical = Skill. A clever one-off is just a prompt."
+          },
+          {
+            "q": "A 'drafting a customer reply on real order data' Skill belongs in…",
+            "opts": [
+              "Codex — it's code",
+              "Claude — it's connected to your real data and your voice",
+              "Neither"
+            ],
+            "a": 1,
+            "ex": "Claude is connected to Shopify/Notion and drafts in your voice. Codex is for building/automating, not data-drafting."
+          },
+          {
+            "q": "What makes a Skill stay trustworthy when reused?",
+            "opts": [
+              "It's fast",
+              "It bakes in its own check — e.g. 'always show the source used'",
+              "It's saved",
+              "It looks neat"
+            ],
+            "a": 1,
+            "ex": "A reusable Skill that can't show its working will eventually be trusted blindly. Build the check in."
+          }
+        ],
+        "apply": {
+          "q": "Pick ONE 'keep this' prompt you saved earlier. Write: (a) is it a Claude Skill or a Codex script, and (b) the one check it should always run. Paste it back.",
+          "placeholder": "e.g. 'Grounded-reply prompt → Claude Project. Always shows the order it used before I send.'"
+        },
+        "keep": {
+          "label": "Skill-builder template",
+          "desc": "Use this to convert any repeated prompt into a proper reusable Skill.",
+          "text": "Turn this into a reusable Skill: [prompt]. Decide: Claude Project (drafting/validating on real data) or Codex script (build/automate)? Define the inputs it needs each run, and bake in one validation check it must always perform (e.g. 'show the source/order used') before I trust the output."
+        },
+        "session": 3,
+        "tier": "core",
+        "kind": "standard",
+        "doIt": "Do this task here. Claude is connected to your real Shopify, BigQuery and Notion — so it works on actual orders and data, drafts in your voice, and you can validate what it really did."
+      }
+    ],
+    "emyr": [
+      {
+        "id": "e1",
+        "phase": "Session 2 · Claude that acts",
+        "colour": "#33B06A",
+        "title": "Map the product data behind your copy",
+        "real": "From your Notion: footpeg research, SHAD pannier-kit comparisons, kickstand pads, chain tensioners — all real product copy you produce.",
+        "learn": {
+          "concept": "Generative AI",
+          "body": "GenAI writes fluently from patterns — which means it can invent a feature that sounds right. For branding, fluent is not the same as true, or on-brand. Grounding it in real product data is everything."
+        },
+        "steps": [
+          {
+            "n": "Step 1",
+            "h": "See the product data",
+            "p": "Ask Claude what product attributes it can pull from Shopify for a given range (e.g. SHAD pannier kits)."
+          },
+          {
+            "n": "Step 2",
+            "h": "Spot the gap",
+            "p": "Note where the real data is thin — those are exactly the spots where Claude is tempted to invent."
+          }
+        ],
+        "prompt": "For our SHAD pannier fitting kits (SE, SR, 3P, 4P) on MotoPlanet, pull the real product attributes from Shopify — materials, fitment, weight, luggage type. Show me what's actually in the data and where it's missing.",
+        "spot": {
+          "q": "You ask for copy on the SHAD 4P kit's frame.",
+          "good": {
+            "txt": "\"The listing specifies a 20mm steel frame with crossbar — I'll write from that.\"",
+            "correct": true,
+            "verdict": "Tied to the real spec in your data."
+          },
+          "bad": {
+            "txt": "\"It features an advanced lightweight alloy frame for maximum durability.\"",
+            "correct": false,
+            "verdict": "'Alloy/lightweight' contradicts your real spec (steel, reinforced). Invented."
+          }
+        },
+        "quiz": [
+          {
+            "q": "GenAI's biggest risk in product copy is…",
+            "opts": [
+              "Typos",
+              "Inventing a feature that sounds plausible but isn't real"
+            ],
+            "a": 1,
+            "ex": "Every spec must trace to the real product. Fluent ≠ true."
+          }
+        ],
+        "apply": {
+          "q": "Pick ONE product you actually write copy for. Ask Claude for its real attributes from Shopify, then paste back one spec that IS in the data and one gap where it's missing.",
+          "placeholder": "e.g. 'real: 20mm steel frame (4P) / missing: exact weight not in listing'"
+        },
+        "keep": {
+          "label": "spec-grounding prompt",
+          "desc": "Stops invented features before they reach your copy.",
+          "text": "For [product], pull the real attributes from Shopify — materials, fitment, weight, dimensions. Show me what's actually in the data and where it's missing. Do not infer or invent any spec; if it's not in the data, say 'not specified'."
+        },
+        "session": 2,
+        "tier": "core",
+        "kind": "standard",
+        "doIt": "Do this task here. Claude is connected to your real Shopify, BigQuery and Notion — so it works on actual orders and data, drafts in your voice, and you can validate what it really did."
+      },
+      {
+        "id": "e2",
+        "phase": "Session 3 · Stop repeating yourself",
+        "colour": "#C0578F",
+        "title": "Turn the Voge 900DX research into an on-brand review script",
+        "real": "Your Notion has a full Voge 900DX press-pack: positioning, owner praise, fuelling niggles, UK price ladder. Real source material for a real video.",
+        "learn": {
+          "concept": "Brief it like a colleague",
+          "body": "Give Claude the angle, the audience, and the must-hit points. With your press-pack as the source, it drafts a script that's grounded — not generic."
+        },
+        "steps": [
+          {
+            "n": "Step 1",
+            "h": "Feed it the press-pack",
+            "p": "Point Claude at your Voge 900DX notes as the single source for the script."
+          },
+          {
+            "n": "Step 2",
+            "h": "Set the brand voice + angle",
+            "p": "'Lot of bike for the money' hook; honest about the low-rpm fuelling; UK rider audience."
+          },
+          {
+            "n": "Step 3",
+            "h": "Demand on-spec accuracy",
+            "p": "Every price and claim must trace to the press-pack — no invented figures."
+          }
+        ],
+        "prompt": "Using my Voge 900DX press-pack notes as the only source, draft a 60-second on-camera intro script. Hook: 'a lot of bike for the money'. Be honest about the low-rpm fuelling. UK rider audience, our brand voice. Every price/claim must come from my notes — flag anything you can't source.",
+        "spot": {
+          "q": "The script quotes the Voge at '£8,799 OTR'.",
+          "good": {
+            "txt": "\"£8,799 OTR — from your press-pack price ladder (checked March 2026).\"",
+            "correct": true,
+            "verdict": "Traces to your own source. Good."
+          },
+          "bad": {
+            "txt": "\"…around £9,500, typical for the class.\"",
+            "correct": false,
+            "verdict": "Doesn't match your notes (£8,799). Invented price."
+          }
+        },
+        "quiz": [
+          {
+            "q": "Two checks every branded draft needs are…",
+            "opts": [
+              "Length and spelling",
+              "R (is it true?) and voice (is it us?)"
+            ],
+            "a": 1,
+            "ex": "Don't let a pass on voice hide a failed fact-check, or vice versa."
+          }
+        ],
+        "apply": {
+          "q": "Take a real bike or product you're reviewing. Draft one opening line from YOUR source notes, then paste it back here — and confirm every claim in it traces to your notes.",
+          "placeholder": "Paste your one-line hook + 'all claims sourced from my notes: yes/no'"
+        },
+        "keep": {
+          "label": "review-script prompt",
+          "desc": "Your repeatable, source-locked script starter for any bike review.",
+          "text": "Using my press-pack notes as the ONLY source, draft a 60-second on-camera intro for [bike]. Hook: [angle]. Honest about [known niggle]. UK rider audience, our brand voice. Every price/claim must come from my notes — flag anything you can't source rather than inventing it."
+        },
+        "session": 3,
+        "tier": "core",
+        "kind": "standard",
+        "doIt": "Do this task here. Claude is connected to your real Shopify, BigQuery and Notion — so it works on actual orders and data, drafts in your voice, and you can validate what it really did."
+      },
+      {
+        "id": "reservoir",
+        "phase": "Session 2 · Claude that acts",
+        "colour": "#14161C",
+        "expert": true,
+        "title": "The one rule that protects the whole business",
+        "real": "Your BigQuery — the Digital Reservoir — is the single source of truth behind every report.",
+        "learn": {
+          "concept": "Multi-agent & orchestration, the short version",
+          "body": "Big jobs get split across specialised agents — a Researcher finds, an Analyst reads data, a Writer drafts, a Reviewer checks — coordinated by an Orchestrator (the 'team lead' agent). You don't build these by hand, but knowing the roles helps you ask for the right help and spot which step went wrong."
+        },
+        "steps": [
+          {
+            "n": "Read freely",
+            "h": "Reading the Reservoir is safe and encouraged",
+            "p": "Ask it anything in plain English — Claude writes the query. This is how Marketing and CS get grounded data."
+          },
+          {
+            "n": "Never write",
+            "h": "Your account CAN write. That is not permission.",
+            "p": "Capability is not authorisation. A bad write corrupts every report for everyone — not just your work."
+          },
+          {
+            "n": "If it offers to write — STOP",
+            "h": "That's the exact moment the rule exists for",
+            "p": "Don't let Claude change, insert, update, delete or 'fix' anything in the Reservoir. Route it to Yas."
+          }
+        ],
+        "prompt": "From our BigQuery data, what were last month's top-selling products on MotoPlanet? Show me the query and the tables you used — read only, do not change anything.",
+        "spot": {
+          "q": "Claude finishes a data task and says it can 'tidy up' a table for you in BigQuery.",
+          "good": {
+            "txt": "\"I can read it and flag what looks off, but I won't change anything — a write to the Reservoir goes through Yas.\"",
+            "correct": true,
+            "verdict": "Correct — reads, flags, refuses to write."
+          },
+          "bad": {
+            "txt": "\"Sure — I'll update those rows now to fix them for you.\"",
+            "correct": false,
+            "verdict": "This is the breach. Stop and route to Yas."
+          }
+        },
+        "quiz": [
+          {
+            "q": "Your account technically CAN write to the Reservoir. So you may…",
+            "opts": [
+              "Write — it lets you",
+              "Nothing changes: capability isn't authorisation. Read only; writes go to Yas"
+            ],
+            "a": 1,
+            "ex": "<b>Capability is not authorisation.</b> The system allowing it is not the same as being permitted."
+          },
+          {
+            "q": "An 'orchestrator' agent…",
+            "opts": [
+              "Does every task itself",
+              "Splits a big task, assigns each piece to the right agent, assembles the result"
+            ],
+            "a": 1,
+            "ex": "Like a pit-crew chief — it coordinates specialists rather than doing it all alone."
+          }
+        ],
+        "apply": {
+          "q": "Run the read-only Reservoir prompt. Paste back the query/tables it showed you — and confirm it did NOT offer to change anything (if it did, that's the lesson).",
+          "placeholder": "e.g. 'Showed query against orders table, read-only, no write offered' OR 'it offered to tidy a table — I declined'"
+        },
+        "keep": {
+          "label": "Reservoir read rule",
+          "desc": "The rule that protects every report in the business. Keep it visible.",
+          "text": "Read the Reservoir freely — ask in plain English, have Claude write the read-only query and show it. NEVER let it write: no change, insert, update, delete or 'fix'. If it offers to write, stop and route to Yas. Capability is not authorisation."
+        },
+        "session": 2,
+        "tier": "core",
+        "kind": "standard",
+        "doIt": "Do it in Claude — read the Reservoir in plain English here — Claude writes the read-only query and shows it."
+      },
+      {
+        "id": "skills",
+        "phase": "Session 3 · Stop repeating yourself",
+        "colour": "#1F6F4A",
+        "expert": true,
+        "title": "Turn your best prompt into a reusable Skill",
+        "real": "You've been collecting 'keep this' prompts all the way through. A Skill is how you stop re-typing them — your team already runs a 'master marketing prompt' and the Alpha Duck CS assistant; those are Skills in the making.",
+        "learn": {
+          "concept": "What a Skill actually is",
+          "body": "A Skill is a saved, reusable instruction set you can run again and again without rewriting it — like a saved recipe for a job you do often. In Claude you save it as a Project/custom instruction; in Codex it's a reusable script or command. Prompt = one-off. Skill = the same job, done consistently, every time."
+        },
+        "steps": [
+          {
+            "n": "Step 1",
+            "h": "Pick a job you repeat",
+            "p": "Choose something you do weekly that must come out consistent — a customer reply format, the performance report, a product-copy template."
+          },
+          {
+            "n": "Step 2",
+            "h": "Claude or Codex?",
+            "p": "If it's drafting/validating on your real data → save it as a Claude Project/Skill. If it's code or automation that runs the same way each time → Codex."
+          },
+          {
+            "n": "Step 3",
+            "h": "Bake the check in",
+            "p": "A good Skill carries its own validation — 'always show the source/order used' — so it stays trustworthy when reused."
+          }
+        ],
+        "prompt": "Help me turn this prompt into a reusable Skill: [paste one of your 'keep this' prompts]. Tell me whether it belongs in Claude (as a Project/saved instruction) or Codex (as a script), what inputs it needs each time, and what validation check it should always run before I trust its output.",
+        "spot": {
+          "q": "You do a one-off press release. Someone says 'let's build a Skill for it.'",
+          "good": {
+            "txt": "\"It's a one-off — just prompt it. Skills are for jobs we repeat and need consistent.\"",
+            "correct": true,
+            "verdict": "Right — don't over-build. Prompt the one-offs."
+          },
+          "bad": {
+            "txt": "\"Yes, let's build a custom Skill and a script for this single release.\"",
+            "correct": false,
+            "verdict": "Overkill. A Skill earns its keep only on frequent, consistent work."
+          }
+        },
+        "quiz": [
+          {
+            "q": "When is it worth turning a prompt into a Skill?",
+            "opts": [
+              "For anything tricky",
+              "When the job is frequent AND must come out consistent",
+              "Never — prompts are always enough",
+              "Only for engineers"
+            ],
+            "a": 1,
+            "ex": "Frequent + consistency-critical = Skill. A clever one-off is just a prompt."
+          },
+          {
+            "q": "A 'drafting a customer reply on real order data' Skill belongs in…",
+            "opts": [
+              "Codex — it's code",
+              "Claude — it's connected to your real data and your voice",
+              "Neither"
+            ],
+            "a": 1,
+            "ex": "Claude is connected to Shopify/Notion and drafts in your voice. Codex is for building/automating, not data-drafting."
+          },
+          {
+            "q": "What makes a Skill stay trustworthy when reused?",
+            "opts": [
+              "It's fast",
+              "It bakes in its own check — e.g. 'always show the source used'",
+              "It's saved",
+              "It looks neat"
+            ],
+            "a": 1,
+            "ex": "A reusable Skill that can't show its working will eventually be trusted blindly. Build the check in."
+          }
+        ],
+        "apply": {
+          "q": "Pick ONE 'keep this' prompt you saved earlier. Write: (a) is it a Claude Skill or a Codex script, and (b) the one check it should always run. Paste it back.",
+          "placeholder": "e.g. 'Grounded-reply prompt → Claude Project. Always shows the order it used before I send.'"
+        },
+        "keep": {
+          "label": "Skill-builder template",
+          "desc": "Use this to convert any repeated prompt into a proper reusable Skill.",
+          "text": "Turn this into a reusable Skill: [prompt]. Decide: Claude Project (drafting/validating on real data) or Codex script (build/automate)? Define the inputs it needs each run, and bake in one validation check it must always perform (e.g. 'show the source/order used') before I trust the output."
+        },
+        "session": 3,
+        "tier": "core",
+        "kind": "standard",
+        "doIt": "Do this task here. Claude is connected to your real Shopify, BigQuery and Notion — so it works on actual orders and data, drafts in your voice, and you can validate what it really did."
+      }
+    ],
+    "immy": [
+      {
+        "id": "i1",
+        "phase": "Session 2 · Claude that acts",
+        "colour": "#33B06A",
+        "title": "See the customer & order data you can reach — safely",
+        "real": "From your CS build: the goal is replies grounded in the customer's real order, knowledge base and saved replies — human-approved.",
+        "learn": {
+          "concept": "Agentic AI for CS",
+          "body": "Claude can pull the real order through the Shopify connector. The skill is letting it fetch the data — never pasting a customer's personal details into the chat yourself."
+        },
+        "steps": [
+          {
+            "n": "Step 1",
+            "h": "See what's reachable",
+            "p": "Ask what customer/order data Claude can pull through Shopify for BL and MP."
+          },
+          {
+            "n": "Step 2",
+            "h": "Mark the PII line",
+            "p": "Note what counts as personal data (names, addresses, contact) — the connector fetches it; you never paste it."
+          }
+        ],
+        "prompt": "What customer and order data can you reach through Shopify for BikeLuggage and MotoPlanet? List what's available, and clearly mark what counts as personal data that should be pulled through the connector rather than pasted into a prompt.",
+        "spot": {
+          "q": "A customer emails asking where order #BL13458 is.",
+          "good": {
+            "txt": "\"Using Shopify, find order #BL13458 and draft a delivery-status reply.\"",
+            "correct": true,
+            "verdict": "Connector fetches it — you stay hands-off the PII."
+          },
+          "bad": {
+            "txt": "You paste the customer's name, address and order details into the chat, then ask for a reply.",
+            "correct": false,
+            "verdict": "PII now sits in the prompt. Avoid — let the connector do it."
+          }
+        },
+        "quiz": [
+          {
+            "q": "A customer's address should be…",
+            "opts": [
+              "Pasted in to save time",
+              "Pulled by the connector, never pasted in"
+            ],
+            "a": 1,
+            "ex": "Keep personal data out of the chat box. The connector is the safe path, every time."
+          }
+        ],
+        "apply": {
+          "q": "Think of a real recent enquiry. Write how you'd ask Claude to pull that order WITHOUT typing the customer's personal details into the chat. Paste your phrasing.",
+          "placeholder": "e.g. 'Using Shopify, find order #BL1XXXX and draft a status reply' — no name/address pasted"
+        },
+        "keep": {
+          "label": "safe-lookup phrasing",
+          "desc": "Your PII-safe way to get Claude onto a real order every time.",
+          "text": "Using Shopify, find order #[number] for [BL/MP] and draft a reply about [issue]. Pull the customer and order details through the connector — I won't paste personal data into the chat. Show me the order you used before drafting."
+        },
+        "session": 2,
+        "tier": "core",
+        "kind": "standard",
+        "doIt": "Do this task here. Claude is connected to your real Shopify, BigQuery and Notion — so it works on actual orders and data, drafts in your voice, and you can validate what it really did."
+      },
+      {
+        "id": "i2",
+        "phase": "Session 3 · Stop repeating yourself",
+        "colour": "#4C8DE8",
+        "title": "Draft a real reply — the tank-bag wind-noise enquiry",
+        "real": "From your Notion, a real CS scenario: 'Thanks for getting in touch Richard. We understand the discomfort, wind is not fun at higher speeds. Do you have your bike's reg to check stock against?' — plus real tank-bag SKUs (E09, TR10, TR15, TR46).",
+        "learn": {
+          "concept": "Grounded drafting",
+          "body": "A good reply pulls the real order, applies your knowledge base (warranty: Puig 1yr / SHAD 2yr), and uses your saved-reply voice — then you review and send."
+        },
+        "steps": [
+          {
+            "n": "Step 1",
+            "h": "Pull the real order",
+            "p": "Have Claude fetch the actual order and the customer's bike/reg if on file."
+          },
+          {
+            "n": "Step 2",
+            "h": "Draft to your voice",
+            "p": "Use your saved-reply tone; ask for the reg to check stock; suggest from real available SKUs only."
+          },
+          {
+            "n": "Step 3",
+            "h": "Check before send",
+            "p": "Confirm every order detail and SKU is real — you approve, then send."
+          }
+        ],
+        "prompt": "A customer (Richard) reports wind noise and wants a tank bag for his bike. Pull his order/bike from Shopify if on file, draft a friendly reply in our voice asking for his reg to check stock, and only suggest tank bags we actually have available. Show me the real order and SKUs you used.",
+        "spot": {
+          "q": "The draft confidently says 'your TR46 will ship today.'",
+          "good": {
+            "txt": "\"I found order #BL13573 with a black TR46 — confirming dispatch status before I promise a ship date.\"",
+            "correct": true,
+            "verdict": "Real order, no over-promise. Good."
+          },
+          "bad": {
+            "txt": "\"Your TR46 tank bag will be dispatched today!\" (no order looked up)",
+            "correct": false,
+            "verdict": "Invented a fulfilment promise. R fails — could be the wrong customer entirely."
+          }
+        },
+        "quiz": [
+          {
+            "q": "Before sending a reply with order details, you must…",
+            "opts": [
+              "Trust the draft if it reads well",
+              "Confirm every order detail is the real order"
+            ],
+            "a": 1,
+            "ex": "Never send order details you haven't confirmed are real — and are the right customer's."
+          }
+        ],
+        "apply": {
+          "q": "Draft a real reply to a genuine recent query using the prompt. Paste back the order number Claude used and confirm you checked it's the RIGHT customer's order before 'sending'.",
+          "placeholder": "e.g. 'Used #BL13573, confirmed it's Richard's order, no other customer referenced'"
+        },
+        "keep": {
+          "label": "grounded-reply prompt",
+          "desc": "Pulls the real order, applies policy, drafts in your voice — review and send.",
+          "text": "A customer reports [issue]. Pull their order from Shopify, draft a friendly reply in our voice, apply our policy and warranty rules (Puig 1yr / SHAD 2yr), and only suggest products we actually have. Show me the real order and SKUs you used so I can confirm before sending."
+        },
+        "session": 3,
+        "tier": "core",
+        "kind": "standard",
+        "doIt": "Do this task here. Claude is connected to your real Shopify, BigQuery and Notion — so it works on actual orders and data, drafts in your voice, and you can validate what it really did."
+      },
+      {
+        "id": "reservoir",
+        "phase": "Session 2 · Claude that acts",
+        "colour": "#14161C",
+        "expert": true,
+        "title": "The one rule that protects the whole business",
+        "real": "Your BigQuery — the Digital Reservoir — is the single source of truth behind every report.",
+        "learn": {
+          "concept": "Multi-agent & orchestration, the short version",
+          "body": "Big jobs get split across specialised agents — a Researcher finds, an Analyst reads data, a Writer drafts, a Reviewer checks — coordinated by an Orchestrator (the 'team lead' agent). You don't build these by hand, but knowing the roles helps you ask for the right help and spot which step went wrong."
+        },
+        "steps": [
+          {
+            "n": "Read freely",
+            "h": "Reading the Reservoir is safe and encouraged",
+            "p": "Ask it anything in plain English — Claude writes the query. This is how Marketing and CS get grounded data."
+          },
+          {
+            "n": "Never write",
+            "h": "Your account CAN write. That is not permission.",
+            "p": "Capability is not authorisation. A bad write corrupts every report for everyone — not just your work."
+          },
+          {
+            "n": "If it offers to write — STOP",
+            "h": "That's the exact moment the rule exists for",
+            "p": "Don't let Claude change, insert, update, delete or 'fix' anything in the Reservoir. Route it to Yas."
+          }
+        ],
+        "prompt": "From our BigQuery data, what were last month's top-selling products on MotoPlanet? Show me the query and the tables you used — read only, do not change anything.",
+        "spot": {
+          "q": "Claude finishes a data task and says it can 'tidy up' a table for you in BigQuery.",
+          "good": {
+            "txt": "\"I can read it and flag what looks off, but I won't change anything — a write to the Reservoir goes through Yas.\"",
+            "correct": true,
+            "verdict": "Correct — reads, flags, refuses to write."
+          },
+          "bad": {
+            "txt": "\"Sure — I'll update those rows now to fix them for you.\"",
+            "correct": false,
+            "verdict": "This is the breach. Stop and route to Yas."
+          }
+        },
+        "quiz": [
+          {
+            "q": "Your account technically CAN write to the Reservoir. So you may…",
+            "opts": [
+              "Write — it lets you",
+              "Nothing changes: capability isn't authorisation. Read only; writes go to Yas"
+            ],
+            "a": 1,
+            "ex": "<b>Capability is not authorisation.</b> The system allowing it is not the same as being permitted."
+          },
+          {
+            "q": "An 'orchestrator' agent…",
+            "opts": [
+              "Does every task itself",
+              "Splits a big task, assigns each piece to the right agent, assembles the result"
+            ],
+            "a": 1,
+            "ex": "Like a pit-crew chief — it coordinates specialists rather than doing it all alone."
+          }
+        ],
+        "apply": {
+          "q": "Run the read-only Reservoir prompt. Paste back the query/tables it showed you — and confirm it did NOT offer to change anything (if it did, that's the lesson).",
+          "placeholder": "e.g. 'Showed query against orders table, read-only, no write offered' OR 'it offered to tidy a table — I declined'"
+        },
+        "keep": {
+          "label": "Reservoir read rule",
+          "desc": "The rule that protects every report in the business. Keep it visible.",
+          "text": "Read the Reservoir freely — ask in plain English, have Claude write the read-only query and show it. NEVER let it write: no change, insert, update, delete or 'fix'. If it offers to write, stop and route to Yas. Capability is not authorisation."
+        },
+        "session": 2,
+        "tier": "core",
+        "kind": "standard",
+        "doIt": "Do it in Claude — read the Reservoir in plain English here — Claude writes the read-only query and shows it."
+      },
+      {
+        "id": "skills",
+        "phase": "Session 3 · Stop repeating yourself",
+        "colour": "#1F6F4A",
+        "expert": true,
+        "title": "Turn your best prompt into a reusable Skill",
+        "real": "You've been collecting 'keep this' prompts all the way through. A Skill is how you stop re-typing them — your team already runs a 'master marketing prompt' and the Alpha Duck CS assistant; those are Skills in the making.",
+        "learn": {
+          "concept": "What a Skill actually is",
+          "body": "A Skill is a saved, reusable instruction set you can run again and again without rewriting it — like a saved recipe for a job you do often. In Claude you save it as a Project/custom instruction; in Codex it's a reusable script or command. Prompt = one-off. Skill = the same job, done consistently, every time."
+        },
+        "steps": [
+          {
+            "n": "Step 1",
+            "h": "Pick a job you repeat",
+            "p": "Choose something you do weekly that must come out consistent — a customer reply format, the performance report, a product-copy template."
+          },
+          {
+            "n": "Step 2",
+            "h": "Claude or Codex?",
+            "p": "If it's drafting/validating on your real data → save it as a Claude Project/Skill. If it's code or automation that runs the same way each time → Codex."
+          },
+          {
+            "n": "Step 3",
+            "h": "Bake the check in",
+            "p": "A good Skill carries its own validation — 'always show the source/order used' — so it stays trustworthy when reused."
+          }
+        ],
+        "prompt": "Help me turn this prompt into a reusable Skill: [paste one of your 'keep this' prompts]. Tell me whether it belongs in Claude (as a Project/saved instruction) or Codex (as a script), what inputs it needs each time, and what validation check it should always run before I trust its output.",
+        "spot": {
+          "q": "You do a one-off press release. Someone says 'let's build a Skill for it.'",
+          "good": {
+            "txt": "\"It's a one-off — just prompt it. Skills are for jobs we repeat and need consistent.\"",
+            "correct": true,
+            "verdict": "Right — don't over-build. Prompt the one-offs."
+          },
+          "bad": {
+            "txt": "\"Yes, let's build a custom Skill and a script for this single release.\"",
+            "correct": false,
+            "verdict": "Overkill. A Skill earns its keep only on frequent, consistent work."
+          }
+        },
+        "quiz": [
+          {
+            "q": "When is it worth turning a prompt into a Skill?",
+            "opts": [
+              "For anything tricky",
+              "When the job is frequent AND must come out consistent",
+              "Never — prompts are always enough",
+              "Only for engineers"
+            ],
+            "a": 1,
+            "ex": "Frequent + consistency-critical = Skill. A clever one-off is just a prompt."
+          },
+          {
+            "q": "A 'drafting a customer reply on real order data' Skill belongs in…",
+            "opts": [
+              "Codex — it's code",
+              "Claude — it's connected to your real data and your voice",
+              "Neither"
+            ],
+            "a": 1,
+            "ex": "Claude is connected to Shopify/Notion and drafts in your voice. Codex is for building/automating, not data-drafting."
+          },
+          {
+            "q": "What makes a Skill stay trustworthy when reused?",
+            "opts": [
+              "It's fast",
+              "It bakes in its own check — e.g. 'always show the source used'",
+              "It's saved",
+              "It looks neat"
+            ],
+            "a": 1,
+            "ex": "A reusable Skill that can't show its working will eventually be trusted blindly. Build the check in."
+          }
+        ],
+        "apply": {
+          "q": "Pick ONE 'keep this' prompt you saved earlier. Write: (a) is it a Claude Skill or a Codex script, and (b) the one check it should always run. Paste it back.",
+          "placeholder": "e.g. 'Grounded-reply prompt → Claude Project. Always shows the order it used before I send.'"
+        },
+        "keep": {
+          "label": "Skill-builder template",
+          "desc": "Use this to convert any repeated prompt into a proper reusable Skill.",
+          "text": "Turn this into a reusable Skill: [prompt]. Decide: Claude Project (drafting/validating on real data) or Codex script (build/automate)? Define the inputs it needs each run, and bake in one validation check it must always perform (e.g. 'show the source/order used') before I trust the output."
+        },
+        "session": 3,
+        "tier": "core",
+        "kind": "standard",
+        "doIt": "Do this task here. Claude is connected to your real Shopify, BigQuery and Notion — so it works on actual orders and data, drafts in your voice, and you can validate what it really did."
+      }
+    ],
+    "callum": [
+      {
+        "id": "c1",
+        "phase": "Session 2 · Claude that acts",
+        "colour": "#33B06A",
+        "title": "See where each person's risks differ",
+        "real": "As founder you judge output quality across Marketing, Branding and CS — each fails in different ways.",
+        "learn": {
+          "concept": "Agentic AI across a team",
+          "body": "The same tool carries different risks per role: Marketing invents stats, Branding invents specs, CS leaks data or over-promises. Good oversight means knowing each failure mode."
+        },
+        "steps": [
+          {
+            "n": "Step 1",
+            "h": "Run 'what can I see?'",
+            "p": "Do the data-visibility exercise yourself so you know what each person can reach."
+          },
+          {
+            "n": "Step 2",
+            "h": "Map the failure modes",
+            "p": "Note: Abbie → invented stats; Emyr → invented specs; Immy → PII/over-promise."
+          }
+        ],
+        "prompt": "Across BikeLuggage and MotoPlanet, show me what data each connector exposes, and help me list the most likely way an agentic output could go wrong for a Marketing task, a Branding task, and a Customer Service task.",
+        "spot": {
+          "q": "You're reviewing a teammate's AI-assisted output.",
+          "good": {
+            "txt": "You ask: 'show me where this number/spec/order came from' before approving.",
+            "correct": true,
+            "verdict": "Source-first review. The habit you want to model."
+          },
+          "bad": {
+            "txt": "It reads well and sounds confident, so you approve it.",
+            "correct": false,
+            "verdict": "Tone isn't evidence. Confident-and-wrong is the whole risk."
+          }
+        },
+        "quiz": [
+          {
+            "q": "Good oversight means judging an output by…",
+            "opts": [
+              "How confident and polished it reads",
+              "Whether its source can be shown and checked"
+            ],
+            "a": 1,
+            "ex": "Model 'show me the source' — it's the behaviour that makes the whole team safe."
+          }
+        ],
+        "apply": {
+          "q": "Review one real piece of AI-assisted work from your team (or your own). Paste back the ONE question you asked to verify it — 'show me where this came from' style.",
+          "placeholder": "e.g. 'Asked Emyr to show the source listing for the frame spec before approving'"
+        },
+        "keep": {
+          "label": "source-first review line",
+          "desc": "The one habit that keeps the whole team safe — reuse on every approval.",
+          "text": "Before I approve this: show me where each number / spec / order detail came from, and confirm it was read from real data rather than generated. If you can't show a source, flag it."
+        },
+        "session": 2,
+        "tier": "core",
+        "kind": "standard",
+        "doIt": "Do this task here. Claude is connected to your real Shopify, BigQuery and Notion — so it works on actual orders and data, drafts in your voice, and you can validate what it really did."
+      },
+      {
+        "id": "c2",
+        "phase": "Session 3 · Stop repeating yourself",
+        "colour": "#F4A623",
+        "title": "Set the team's go/no-go and escalation norms",
+        "real": "You own targets, cost approvals (e.g. Klaviyo), and delegation — you set what 'safe to act on' means here.",
+        "learn": {
+          "concept": "Go / No-Go",
+          "body": "After TRACE, the call is simple: GO (source shown, checks out, stayed safe) or NO-GO (can't show source, a figure won't reconcile, strayed off-limits → fix or escalate to Yas)."
+        },
+        "steps": [
+          {
+            "n": "Step 1",
+            "h": "Define GO",
+            "p": "Source shown and spot-checked; answers the real question; stayed read-only; no PII exposed."
+          },
+          {
+            "n": "Step 2",
+            "h": "Define escalation",
+            "p": "Anything needing a Reservoir write, or anything unsure, goes to Yas — make asking feel easy."
+          }
+        ],
+        "prompt": "Help me write a one-paragraph 'go / no-go' rule for the team: when an AI-assisted output is safe to act on, and when it must be checked or escalated to Yas. Keep it plain and memorable.",
+        "spot": {
+          "q": "A teammate's report has one figure that won't reconcile.",
+          "good": {
+            "txt": "\"No-Go until that figure traces — everything else can wait on it.\"",
+            "correct": true,
+            "verdict": "One broken number = pause. Right call."
+          },
+          "bad": {
+            "txt": "\"The rest looks fine, ship it.\"",
+            "correct": false,
+            "verdict": "One unreconciled figure can invalidate the conclusion. No-Go."
+          }
+        },
+        "quiz": [
+          {
+            "q": "'It can't show me where the number came from.' That's a…",
+            "opts": [
+              "Go",
+              "No-Go"
+            ],
+            "a": 1,
+            "ex": "No visible source = No-Go. Don't act until it's traced."
+          }
+        ],
+        "apply": {
+          "q": "Write your team's go/no-go rule in your OWN words (one or two sentences). Paste it here — this becomes the norm you actually share with everyone.",
+          "placeholder": "e.g. 'GO if the source is shown and checks out and nothing customer-facing leaked. Otherwise No-Go → Yas.'"
+        },
+        "keep": {
+          "label": "go/no-go rule",
+          "desc": "Your team's shared standard for when AI output is safe to act on.",
+          "text": "GO when: the source is shown and spot-checked, it answers the real question, it stayed read-only, and no customer data was exposed. NO-GO when: it can't show a source, a figure won't reconcile, or it strayed off-limits — fix it or escalate to Yas. Capability is not authorisation."
+        },
+        "session": 3,
+        "tier": "core",
+        "kind": "standard",
+        "doIt": "Do this task here. Claude is connected to your real Shopify, BigQuery and Notion — so it works on actual orders and data, drafts in your voice, and you can validate what it really did."
+      },
+      {
+        "id": "reservoir",
+        "phase": "Session 2 · Claude that acts",
+        "colour": "#14161C",
+        "expert": true,
+        "title": "The one rule that protects the whole business",
+        "real": "Your BigQuery — the Digital Reservoir — is the single source of truth behind every report.",
+        "learn": {
+          "concept": "Multi-agent & orchestration, the short version",
+          "body": "Big jobs get split across specialised agents — a Researcher finds, an Analyst reads data, a Writer drafts, a Reviewer checks — coordinated by an Orchestrator (the 'team lead' agent). You don't build these by hand, but knowing the roles helps you ask for the right help and spot which step went wrong."
+        },
+        "steps": [
+          {
+            "n": "Read freely",
+            "h": "Reading the Reservoir is safe and encouraged",
+            "p": "Ask it anything in plain English — Claude writes the query. This is how Marketing and CS get grounded data."
+          },
+          {
+            "n": "Never write",
+            "h": "Your account CAN write. That is not permission.",
+            "p": "Capability is not authorisation. A bad write corrupts every report for everyone — not just your work."
+          },
+          {
+            "n": "If it offers to write — STOP",
+            "h": "That's the exact moment the rule exists for",
+            "p": "Don't let Claude change, insert, update, delete or 'fix' anything in the Reservoir. Route it to Yas."
+          }
+        ],
+        "prompt": "From our BigQuery data, what were last month's top-selling products on MotoPlanet? Show me the query and the tables you used — read only, do not change anything.",
+        "spot": {
+          "q": "Claude finishes a data task and says it can 'tidy up' a table for you in BigQuery.",
+          "good": {
+            "txt": "\"I can read it and flag what looks off, but I won't change anything — a write to the Reservoir goes through Yas.\"",
+            "correct": true,
+            "verdict": "Correct — reads, flags, refuses to write."
+          },
+          "bad": {
+            "txt": "\"Sure — I'll update those rows now to fix them for you.\"",
+            "correct": false,
+            "verdict": "This is the breach. Stop and route to Yas."
+          }
+        },
+        "quiz": [
+          {
+            "q": "Your account technically CAN write to the Reservoir. So you may…",
+            "opts": [
+              "Write — it lets you",
+              "Nothing changes: capability isn't authorisation. Read only; writes go to Yas"
+            ],
+            "a": 1,
+            "ex": "<b>Capability is not authorisation.</b> The system allowing it is not the same as being permitted."
+          },
+          {
+            "q": "An 'orchestrator' agent…",
+            "opts": [
+              "Does every task itself",
+              "Splits a big task, assigns each piece to the right agent, assembles the result"
+            ],
+            "a": 1,
+            "ex": "Like a pit-crew chief — it coordinates specialists rather than doing it all alone."
+          }
+        ],
+        "apply": {
+          "q": "Run the read-only Reservoir prompt. Paste back the query/tables it showed you — and confirm it did NOT offer to change anything (if it did, that's the lesson).",
+          "placeholder": "e.g. 'Showed query against orders table, read-only, no write offered' OR 'it offered to tidy a table — I declined'"
+        },
+        "keep": {
+          "label": "Reservoir read rule",
+          "desc": "The rule that protects every report in the business. Keep it visible.",
+          "text": "Read the Reservoir freely — ask in plain English, have Claude write the read-only query and show it. NEVER let it write: no change, insert, update, delete or 'fix'. If it offers to write, stop and route to Yas. Capability is not authorisation."
+        },
+        "session": 2,
+        "tier": "core",
+        "kind": "standard",
+        "doIt": "Do it in Claude — read the Reservoir in plain English here — Claude writes the read-only query and shows it."
+      },
+      {
+        "id": "skills",
+        "phase": "Session 3 · Stop repeating yourself",
+        "colour": "#1F6F4A",
+        "expert": true,
+        "title": "Turn your best prompt into a reusable Skill",
+        "real": "You've been collecting 'keep this' prompts all the way through. A Skill is how you stop re-typing them — your team already runs a 'master marketing prompt' and the Alpha Duck CS assistant; those are Skills in the making.",
+        "learn": {
+          "concept": "What a Skill actually is",
+          "body": "A Skill is a saved, reusable instruction set you can run again and again without rewriting it — like a saved recipe for a job you do often. In Claude you save it as a Project/custom instruction; in Codex it's a reusable script or command. Prompt = one-off. Skill = the same job, done consistently, every time."
+        },
+        "steps": [
+          {
+            "n": "Step 1",
+            "h": "Pick a job you repeat",
+            "p": "Choose something you do weekly that must come out consistent — a customer reply format, the performance report, a product-copy template."
+          },
+          {
+            "n": "Step 2",
+            "h": "Claude or Codex?",
+            "p": "If it's drafting/validating on your real data → save it as a Claude Project/Skill. If it's code or automation that runs the same way each time → Codex."
+          },
+          {
+            "n": "Step 3",
+            "h": "Bake the check in",
+            "p": "A good Skill carries its own validation — 'always show the source/order used' — so it stays trustworthy when reused."
+          }
+        ],
+        "prompt": "Help me turn this prompt into a reusable Skill: [paste one of your 'keep this' prompts]. Tell me whether it belongs in Claude (as a Project/saved instruction) or Codex (as a script), what inputs it needs each time, and what validation check it should always run before I trust its output.",
+        "spot": {
+          "q": "You do a one-off press release. Someone says 'let's build a Skill for it.'",
+          "good": {
+            "txt": "\"It's a one-off — just prompt it. Skills are for jobs we repeat and need consistent.\"",
+            "correct": true,
+            "verdict": "Right — don't over-build. Prompt the one-offs."
+          },
+          "bad": {
+            "txt": "\"Yes, let's build a custom Skill and a script for this single release.\"",
+            "correct": false,
+            "verdict": "Overkill. A Skill earns its keep only on frequent, consistent work."
+          }
+        },
+        "quiz": [
+          {
+            "q": "When is it worth turning a prompt into a Skill?",
+            "opts": [
+              "For anything tricky",
+              "When the job is frequent AND must come out consistent",
+              "Never — prompts are always enough",
+              "Only for engineers"
+            ],
+            "a": 1,
+            "ex": "Frequent + consistency-critical = Skill. A clever one-off is just a prompt."
+          },
+          {
+            "q": "A 'drafting a customer reply on real order data' Skill belongs in…",
+            "opts": [
+              "Codex — it's code",
+              "Claude — it's connected to your real data and your voice",
+              "Neither"
+            ],
+            "a": 1,
+            "ex": "Claude is connected to Shopify/Notion and drafts in your voice. Codex is for building/automating, not data-drafting."
+          },
+          {
+            "q": "What makes a Skill stay trustworthy when reused?",
+            "opts": [
+              "It's fast",
+              "It bakes in its own check — e.g. 'always show the source used'",
+              "It's saved",
+              "It looks neat"
+            ],
+            "a": 1,
+            "ex": "A reusable Skill that can't show its working will eventually be trusted blindly. Build the check in."
+          }
+        ],
+        "apply": {
+          "q": "Pick ONE 'keep this' prompt you saved earlier. Write: (a) is it a Claude Skill or a Codex script, and (b) the one check it should always run. Paste it back.",
+          "placeholder": "e.g. 'Grounded-reply prompt → Claude Project. Always shows the order it used before I send.'"
+        },
+        "keep": {
+          "label": "Skill-builder template",
+          "desc": "Use this to convert any repeated prompt into a proper reusable Skill.",
+          "text": "Turn this into a reusable Skill: [prompt]. Decide: Claude Project (drafting/validating on real data) or Codex script (build/automate)? Define the inputs it needs each run, and bake in one validation check it must always perform (e.g. 'show the source/order used') before I trust the output."
+        },
+        "session": 3,
+        "tier": "core",
+        "kind": "standard",
+        "doIt": "Do this task here. Claude is connected to your real Shopify, BigQuery and Notion — so it works on actual orders and data, drafts in your voice, and you can validate what it really did."
+      }
+    ],
+    "yas": [
+      {
+        "id": "y1",
+        "phase": "Session 2 · Claude that acts",
+        "colour": "#33B06A",
+        "title": "Be the validation coach, not the rescuer",
+        "real": "You're the only Reservoir writer and the most agentic-experienced — your job is lifting everyone's judgment.",
+        "learn": {
+          "concept": "Coaching judgment",
+          "body": "The win isn't you fixing outputs fast — it's the team learning to run TRACE themselves. Surface real failures live (a confident-wrong answer, an invented order, a write offer) as teaching moments."
+        },
+        "steps": [
+          {
+            "n": "Step 1",
+            "h": "Audit connector scopes",
+            "p": "Confirm what each person can actually reach, and the read/write reality of the Reservoir per account."
+          },
+          {
+            "n": "Step 2",
+            "h": "Build the safe read pattern",
+            "p": "Document a plain-English BigQuery read pattern others can reuse, with 'show the query' baked in."
+          }
+        ],
+        "prompt": "Document a safe, reusable BigQuery read pattern for the non-technical team: plain-English question in, Claude writes the read-only query, always shows the query + tables, and never writes. Include a worked example against our product-sales data.",
+        "spot": {
+          "q": "Abbie's stuck on a data task during a session.",
+          "good": {
+            "txt": "You ask 'what does TRACE say here?' and let her find the gap.",
+            "correct": true,
+            "verdict": "Coaches the judgment. That's the goal."
+          },
+          "bad": {
+            "txt": "You take her keyboard and fix it in 20 seconds.",
+            "correct": false,
+            "verdict": "Fast, but her judgment didn't improve. Resist rescuing."
+          }
+        },
+        "quiz": [
+          {
+            "q": "Your highest-value move as coach is…",
+            "opts": [
+              "Fixing outputs quickly for people",
+              "Getting people to run TRACE themselves"
+            ],
+            "a": 1,
+            "ex": "Their judgment improving is the win — not your speed."
+          }
+        ],
+        "apply": {
+          "q": "Document the safe read pattern for one real query the team needs. Paste back the plain-English question + confirm it's read-only and 'shows the query'.",
+          "placeholder": "e.g. 'Q: top sellers last month → read-only, returns query + tables shown, no writes'"
+        },
+        "keep": {
+          "label": "safe read pattern",
+          "desc": "The reusable, copy-paste pattern you hand the non-technical team.",
+          "text": "[Plain-English question] — read only. Write the BigQuery query for me, run it read-only, and always show me the query and the tables you used. Never modify, insert, update or delete anything in the Reservoir."
+        },
+        "session": 2,
+        "tier": "builder",
+        "kind": "standard",
+        "doIt": "Do it in Claude — use Claude to actually run the read-only BigQuery queries in plain English and show the team the results."
+      },
+      {
+        "id": "y2",
+        "phase": "Session 3 · Stop repeating yourself",
+        "colour": "#33B06A",
+        "title": "Build one reusable skill the team relies on",
+        "real": "Abbie already maintains a 'master marketing prompt' and a GPT project; you can turn the best repeated jobs into proper skills.",
+        "learn": {
+          "concept": "When to build a skill",
+          "body": "Prompt for one-offs. Build a skill when a task is frequent AND must come out consistent — brand voice, a standard CS reply format, a weekly report shape."
+        },
+        "steps": [
+          {
+            "n": "Step 1",
+            "h": "Pick a frequent+consistent task",
+            "p": "E.g. the validated-customer-reply format, or the marketing performance read."
+          },
+          {
+            "n": "Step 2",
+            "h": "Package it with the check built in",
+            "p": "Bake 'show your working' and the relevant TRACE letters into the skill itself."
+          }
+        ],
+        "prompt": "Help me design a reusable 'validated customer reply' skill for the CS team: it pulls the real order, applies our knowledge base and warranty rules, drafts in our voice, and always shows the order it used so the agent can confirm before sending.",
+        "spot": {
+          "q": "Someone wants to build a skill for a one-off press release.",
+          "good": {
+            "txt": "\"That's a one-off — just prompt it. Skills are for frequent + consistent jobs.\"",
+            "correct": true,
+            "verdict": "Right call — don't over-build."
+          },
+          "bad": {
+            "txt": "\"Sure, let's build a custom skill for it.\"",
+            "correct": false,
+            "verdict": "Overkill for a one-off. A prompt is enough."
+          }
+        },
+        "quiz": [
+          {
+            "q": "Build a custom skill when a task is…",
+            "opts": [
+              "Hard",
+              "Frequent AND needs to be consistent"
+            ],
+            "a": 1,
+            "ex": "Frequent + consistency-critical = skill. One-offs just get a prompt."
+          }
+        ],
+        "apply": {
+          "q": "Pick one frequent+consistent team task. Paste back: what the skill does, and the ONE check you'd bake into it (e.g. 'always shows the order used').",
+          "placeholder": "e.g. 'Validated CS reply skill → always shows the order + applies warranty rules before drafting'"
+        },
+        "keep": {
+          "label": "skill spec starter",
+          "desc": "A template for specifying any reusable skill with validation built in.",
+          "text": "Design a reusable skill for [frequent task]. It should: pull the real data ([source]), apply our rules ([policy/KB]), produce [output] in our voice, and ALWAYS show the source it used so a human can verify before acting. Bake the check in — don't make it optional."
+        },
+        "session": 3,
+        "tier": "builder",
+        "kind": "standard",
+        "doIt": "Do it in Claude — design and test the skill's behaviour here against real data and your knowledge base."
+      },
+      {
+        "id": "reservoir",
+        "phase": "Session 2 · Claude that acts",
+        "colour": "#14161C",
+        "expert": true,
+        "title": "The one rule that protects the whole business",
+        "real": "Your BigQuery — the Digital Reservoir — is the single source of truth behind every report.",
+        "learn": {
+          "concept": "Multi-agent & orchestration, the short version",
+          "body": "Big jobs get split across specialised agents — a Researcher finds, an Analyst reads data, a Writer drafts, a Reviewer checks — coordinated by an Orchestrator (the 'team lead' agent). You don't build these by hand, but knowing the roles helps you ask for the right help and spot which step went wrong."
+        },
+        "steps": [
+          {
+            "n": "Read freely",
+            "h": "Reading the Reservoir is safe and encouraged",
+            "p": "Ask it anything in plain English — Claude writes the query. This is how Marketing and CS get grounded data."
+          },
+          {
+            "n": "Never write",
+            "h": "Your account CAN write. That is not permission.",
+            "p": "Capability is not authorisation. A bad write corrupts every report for everyone — not just your work."
+          },
+          {
+            "n": "If it offers to write — STOP",
+            "h": "That's the exact moment the rule exists for",
+            "p": "Don't let Claude change, insert, update, delete or 'fix' anything in the Reservoir. Route it to Yas."
+          }
+        ],
+        "prompt": "From our BigQuery data, what were last month's top-selling products on MotoPlanet? Show me the query and the tables you used — read only, do not change anything.",
+        "spot": {
+          "q": "Claude finishes a data task and says it can 'tidy up' a table for you in BigQuery.",
+          "good": {
+            "txt": "\"I can read it and flag what looks off, but I won't change anything — a write to the Reservoir goes through Yas.\"",
+            "correct": true,
+            "verdict": "Correct — reads, flags, refuses to write."
+          },
+          "bad": {
+            "txt": "\"Sure — I'll update those rows now to fix them for you.\"",
+            "correct": false,
+            "verdict": "This is the breach. Stop and route to Yas."
+          }
+        },
+        "quiz": [
+          {
+            "q": "Your account technically CAN write to the Reservoir. So you may…",
+            "opts": [
+              "Write — it lets you",
+              "Nothing changes: capability isn't authorisation. Read only; writes go to Yas"
+            ],
+            "a": 1,
+            "ex": "<b>Capability is not authorisation.</b> The system allowing it is not the same as being permitted."
+          },
+          {
+            "q": "An 'orchestrator' agent…",
+            "opts": [
+              "Does every task itself",
+              "Splits a big task, assigns each piece to the right agent, assembles the result"
+            ],
+            "a": 1,
+            "ex": "Like a pit-crew chief — it coordinates specialists rather than doing it all alone."
+          }
+        ],
+        "apply": {
+          "q": "Run the read-only Reservoir prompt. Paste back the query/tables it showed you — and confirm it did NOT offer to change anything (if it did, that's the lesson).",
+          "placeholder": "e.g. 'Showed query against orders table, read-only, no write offered' OR 'it offered to tidy a table — I declined'"
+        },
+        "keep": {
+          "label": "Reservoir read rule",
+          "desc": "The rule that protects every report in the business. Keep it visible.",
+          "text": "Read the Reservoir freely — ask in plain English, have Claude write the read-only query and show it. NEVER let it write: no change, insert, update, delete or 'fix'. If it offers to write, stop and route to Yas. Capability is not authorisation."
+        },
+        "session": 2,
+        "tier": "core",
+        "kind": "standard",
+        "doIt": "Do it in Claude — read the Reservoir in plain English here — Claude writes the read-only query and shows it."
+      },
+      {
+        "id": "skills",
+        "phase": "Session 3 · Stop repeating yourself",
+        "colour": "#1F6F4A",
+        "expert": true,
+        "title": "Turn your best prompt into a reusable Skill",
+        "real": "You've been collecting 'keep this' prompts all the way through. A Skill is how you stop re-typing them — your team already runs a 'master marketing prompt' and the Alpha Duck CS assistant; those are Skills in the making.",
+        "learn": {
+          "concept": "What a Skill actually is",
+          "body": "A Skill is a saved, reusable instruction set you can run again and again without rewriting it — like a saved recipe for a job you do often. In Claude you save it as a Project/custom instruction; in Codex it's a reusable script or command. Prompt = one-off. Skill = the same job, done consistently, every time."
+        },
+        "steps": [
+          {
+            "n": "Step 1",
+            "h": "Pick a job you repeat",
+            "p": "Choose something you do weekly that must come out consistent — a customer reply format, the performance report, a product-copy template."
+          },
+          {
+            "n": "Step 2",
+            "h": "Claude or Codex?",
+            "p": "If it's drafting/validating on your real data → save it as a Claude Project/Skill. If it's code or automation that runs the same way each time → Codex."
+          },
+          {
+            "n": "Step 3",
+            "h": "Bake the check in",
+            "p": "A good Skill carries its own validation — 'always show the source/order used' — so it stays trustworthy when reused."
+          }
+        ],
+        "prompt": "Help me turn this prompt into a reusable Skill: [paste one of your 'keep this' prompts]. Tell me whether it belongs in Claude (as a Project/saved instruction) or Codex (as a script), what inputs it needs each time, and what validation check it should always run before I trust its output.",
+        "spot": {
+          "q": "You do a one-off press release. Someone says 'let's build a Skill for it.'",
+          "good": {
+            "txt": "\"It's a one-off — just prompt it. Skills are for jobs we repeat and need consistent.\"",
+            "correct": true,
+            "verdict": "Right — don't over-build. Prompt the one-offs."
+          },
+          "bad": {
+            "txt": "\"Yes, let's build a custom Skill and a script for this single release.\"",
+            "correct": false,
+            "verdict": "Overkill. A Skill earns its keep only on frequent, consistent work."
+          }
+        },
+        "quiz": [
+          {
+            "q": "When is it worth turning a prompt into a Skill?",
+            "opts": [
+              "For anything tricky",
+              "When the job is frequent AND must come out consistent",
+              "Never — prompts are always enough",
+              "Only for engineers"
+            ],
+            "a": 1,
+            "ex": "Frequent + consistency-critical = Skill. A clever one-off is just a prompt."
+          },
+          {
+            "q": "A 'drafting a customer reply on real order data' Skill belongs in…",
+            "opts": [
+              "Codex — it's code",
+              "Claude — it's connected to your real data and your voice",
+              "Neither"
+            ],
+            "a": 1,
+            "ex": "Claude is connected to Shopify/Notion and drafts in your voice. Codex is for building/automating, not data-drafting."
+          },
+          {
+            "q": "What makes a Skill stay trustworthy when reused?",
+            "opts": [
+              "It's fast",
+              "It bakes in its own check — e.g. 'always show the source used'",
+              "It's saved",
+              "It looks neat"
+            ],
+            "a": 1,
+            "ex": "A reusable Skill that can't show its working will eventually be trusted blindly. Build the check in."
+          }
+        ],
+        "apply": {
+          "q": "Pick ONE 'keep this' prompt you saved earlier. Write: (a) is it a Claude Skill or a Codex script, and (b) the one check it should always run. Paste it back.",
+          "placeholder": "e.g. 'Grounded-reply prompt → Claude Project. Always shows the order it used before I send.'"
+        },
+        "keep": {
+          "label": "Skill-builder template",
+          "desc": "Use this to convert any repeated prompt into a proper reusable Skill.",
+          "text": "Turn this into a reusable Skill: [prompt]. Decide: Claude Project (drafting/validating on real data) or Codex script (build/automate)? Define the inputs it needs each run, and bake in one validation check it must always perform (e.g. 'show the source/order used') before I trust the output."
+        },
+        "session": 3,
+        "tier": "core",
+        "kind": "standard",
+        "doIt": "Do this task here. Claude is connected to your real Shopify, BigQuery and Notion — so it works on actual orders and data, drafts in your voice, and you can validate what it really did."
+      }
+    ]
+  }
+}
