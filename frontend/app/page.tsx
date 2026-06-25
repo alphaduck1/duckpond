@@ -3,6 +3,7 @@ import { useEffect, useState, useRef } from "react";
 import { api } from "@/lib/api";
 import { speak, stopSpeak } from "@/lib/voice";
 import SessionHub from "@/app/views/SessionHub";
+import Presentation from "@/app/views/Presentation";
 import Journey from "@/app/views/Journey";
 import Sandbox from "@/app/views/Sandbox";
 import AdminDashboard from "@/app/views/AdminDashboard";
@@ -33,7 +34,7 @@ function saveLocalFeedback(persona: string, mid: string, fb: { confidence?: stri
   } catch {}
 }
 
-type View = "pick" | "sessions" | "journey" | "mission" | "dash";
+type View = "pick" | "sessions" | "journey" | "mission" | "dash" | "present";
 
 export default function Home() {
   const [user, setUser] = useState<any>(null);
@@ -44,6 +45,7 @@ export default function Home() {
   const [completed, setCompleted] = useState<string[]>([]);
   const [feedbackByMission, setFeedbackByMission] = useState<Record<string, { confidence?: string; stars?: number }>>({});
   const [activeMid, setActiveMid] = useState<string | null>(null);
+  const [presentSid, setPresentSid] = useState<string | null>(null); // session id being presented
   const [readAloud, setReadAloud] = useState(false);
   const [err, setErr] = useState("");
 
@@ -75,7 +77,8 @@ export default function Home() {
   if (!data) return <Splash msg="Loading the pond…" />;
 
   const people = data.people, missions = data.missions, trace = data.trace,
-    sessions = data.sessions, glossary = data.glossary;
+    sessions = data.sessions, glossary = data.glossary,
+    presentation = data.presentation || {};
 
   const activeMission = persona && activeMid
     ? missions[persona].find((x: any) => x.id === activeMid)
@@ -114,7 +117,23 @@ export default function Home() {
             isAdmin={user.is_admin}
             onOpen={(mid: string) => { setActiveMid(mid); setView("mission"); }}
             onJourney={() => setView("journey")}
+            onPresent={(sid: string) => { stopSpeak(); setPresentSid(sid); setView("present"); }}
             onDash={() => setView("dash")} />
+        )}
+        {view === "present" && presentSid && presentation[presentSid] && (
+          <Presentation
+            deck={presentation[presentSid]}
+            onExit={() => { stopSpeak(); setView("sessions"); }}
+            onStartMissions={() => {
+              stopSpeak();
+              setView("sessions");
+              // Return to the hub focused on the session we just presented.
+              const sid = presentSid;
+              setTimeout(() => {
+                document.getElementById("session-" + sid)?.scrollIntoView({ behavior: "smooth", block: "start" });
+              }, 60);
+            }}
+          />
         )}
         {view === "journey" && persona && (
           <Journey sessions={sessions} missions={missions[persona]} completed={completed}

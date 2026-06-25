@@ -62,6 +62,7 @@ type Props = {
   persona: string;
   onOpen: (missionId: string) => void;
   onJourney: () => void;
+  onPresent: (sessionId: string) => void;   // open the live presenter deck for a session
   isAdmin: boolean;
   onDash: () => void;
 };
@@ -75,6 +76,7 @@ export default function SessionHub({
   persona,
   onOpen,
   onJourney,
+  onPresent,
   isAdmin,
   onDash,
 }: Props) {
@@ -136,7 +138,7 @@ export default function SessionHub({
             weekMissions.length > 0 && weekDone === weekMissions.length;
 
           return (
-            <section key={sid} className="card" style={{ padding: 0, overflow: "hidden" }}>
+            <section key={sid} id={"session-" + sid} className="card" style={{ padding: 0, overflow: "hidden", scrollMarginTop: 76 }}>
               {/* Week header */}
               <div
                 style={{
@@ -215,13 +217,30 @@ export default function SessionHub({
                 <div
                   style={{
                     flexShrink: 0,
-                    fontSize: 11.5,
-                    fontWeight: 600,
-                    fontFamily: "Space Grotesk",
-                    color: weekComplete ? "var(--green)" : "var(--mute)",
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "flex-end",
+                    gap: 10,
                   }}
                 >
-                  {weekDone}/{weekMissions.length}
+                  <div
+                    style={{
+                      fontSize: 11.5,
+                      fontWeight: 600,
+                      fontFamily: "Space Grotesk",
+                      color: weekComplete ? "var(--green)" : "var(--mute)",
+                    }}
+                  >
+                    {weekDone}/{weekMissions.length}
+                  </div>
+                  <button
+                    className="btn ghost sm"
+                    style={{ whiteSpace: "nowrap" }}
+                    onClick={() => onPresent(sid)}
+                    title="Present this session live to the team"
+                  >
+                    ▶ Present this session
+                  </button>
                 </div>
               </div>
 
