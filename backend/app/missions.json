@@ -542,7 +542,7 @@
         "phase": "Session 2 · Claude that acts",
         "colour": "#E7654A",
         "title": "Ask the Reservoir a marketing question",
-        "real": "From your Monday list: \"Is one of our ad channels quietly going off the boil?\" Before you open Claude, picture the prize — a good answer names the channel, gives its ROAS this month vs last, and shows the exact table and query it came from. Decide that first; now you've got something concrete to check the dog's work against when it trots back.",
+        "real": "From your Monday list: \"Is one of our ad channels quietly going off the boil?\" Before you open Claude, picture the prize — a good answer names the channel, gives its ROAS this month vs last, and shows the exact table and query it came from. Decide that first; now you've got something concrete to check the answer against when it comes back.",
         "learn": {
           "concept": "Take the number from the right layer (and define good first)",
           "body": "Two ideas meet here. First, begin with the end: a good ROAS answer isn't \"Meta feels weak\" — it's \"Google ROAS fell from 9.77 in March to 7.28 in April while spend nearly doubled, from the v_campaign_daily marts.\" Write that target sentence before you prompt. Second, read from the right layer. The Reservoir runs from raw data through to finished, decision-ready tables (the marts). Each ad channel has a ready-to-use daily view — google_ads, meta_ads, microsoft_ads — with spend, conversion value and ROAS already worked out. Ask Claude to use those marts, read-only, and show its query. A confident channel opinion with no query is just a guess in a marketer's voice."
@@ -555,7 +555,7 @@
           },
           {
             "n": "Step 2",
-            "h": "Send the dog to the right shelf",
+            "h": "Point Claude at the right table",
             "p": "Ask Claude to compare ROAS month-over-month across the three ad channels using their daily marts views (03_market_google_ads.v_campaign_daily and the meta/microsoft siblings), read-only. Insist it shows the SQL and the per-channel numbers."
           },
           {
@@ -1117,12 +1117,12 @@
           {
             "q": "Claude can describe your product range fluently but can't open your live Shopify to read the actual records. What's missing?",
             "opts": [
-              "A connector — the key to that system's gate",
+              "A connector — what gives it access to that system",
               "A skill — a saved way of doing the job",
               "Nothing; fluent description means it already has access"
             ],
             "a": 0,
-            "ex": "<b>Yes.</b> Without the connector it's working from general training, not your real livestock. The connector is what lets it into the actual field."
+            "ex": "<b>Yes.</b> Without the connector it's working from general training, not your real data. The connector is what lets it reach the actual data."
           }
         ],
         "apply": {
@@ -1665,7 +1665,7 @@
           {
             "n": "Step 1",
             "h": "Write the good answer first",
-            "p": "Before prompting, finish this sentence: 'I'll trust the content-performance answer when it shows me clicks and CTR per page/query from real Search Console data, not just impressions.' That one line is your gate-check."
+            "p": "Before prompting, finish this sentence: 'I'll trust the content-performance answer when it shows me clicks and CTR per page/query from real Search Console data, not just impressions.' That one line is your check."
           },
           {
             "n": "Step 2",
@@ -2240,12 +2240,12 @@
           {
             "q": "Claude can describe your product range fluently but can't open your live Shopify to read the actual records. What's missing?",
             "opts": [
-              "A connector — the key to that system's gate",
+              "A connector — what gives it access to that system",
               "A skill — a saved way of doing the job",
               "Nothing; fluent description means it already has access"
             ],
             "a": 0,
-            "ex": "<b>Yes.</b> Without the connector it's working from general training, not your real livestock. The connector is what lets it into the actual field."
+            "ex": "<b>Yes.</b> Without the connector it's working from general training, not your real data. The connector is what lets it reach the actual data."
           }
         ],
         "apply": {
@@ -2481,7 +2481,7 @@
               "Send it — it's a well-known brand, so it's probably fine"
             ],
             "a": 0,
-            "ex": "<b>Yes.</b> No traceable record means you can't stand behind it. The SH40 record may well say waterproof — but you only know that once the dog has actually been into the field and shown you."
+            "ex": "<b>Yes.</b> No traceable record means you can't stand behind it. The SH40 record may well say waterproof — but you only know that once Claude has actually read the real record and shown you."
           }
         ],
         "apply": {
@@ -3365,12 +3365,12 @@
           {
             "q": "Claude can describe your product range fluently but can't open your live Shopify to read the actual records. What's missing?",
             "opts": [
-              "A connector — the key to that system's gate",
+              "A connector — what gives it access to that system",
               "A skill — a saved way of doing the job",
               "Nothing; fluent description means it already has access"
             ],
             "a": 0,
-            "ex": "<b>Yes.</b> Without the connector it's working from general training, not your real livestock. The connector is what lets it into the actual field."
+            "ex": "<b>Yes.</b> Without the connector it's working from general training, not your real data. The connector is what lets it reach the actual data."
           }
         ],
         "apply": {
@@ -4408,12 +4408,12 @@
           {
             "q": "Claude can describe your product range fluently but can't open your live Shopify to read the actual records. What's missing?",
             "opts": [
-              "A connector — the key to that system's gate",
+              "A connector — what gives it access to that system",
               "A skill — a saved way of doing the job",
               "Nothing; fluent description means it already has access"
             ],
             "a": 0,
-            "ex": "<b>Yes.</b> Without the connector it's working from general training, not your real livestock. The connector is what lets it into the actual field."
+            "ex": "<b>Yes.</b> Without the connector it's working from general training, not your real data. The connector is what lets it reach the actual data."
           }
         ],
         "apply": {
@@ -5445,12 +5445,12 @@
           {
             "q": "Claude can describe your product range fluently but can't open your live Shopify to read the actual records. What's missing?",
             "opts": [
-              "A connector — the key to that system's gate",
+              "A connector — what gives it access to that system",
               "A skill — a saved way of doing the job",
               "Nothing; fluent description means it already has access"
             ],
             "a": 0,
-            "ex": "<b>Yes.</b> Without the connector it's working from general training, not your real livestock. The connector is what lets it into the actual field."
+            "ex": "<b>Yes.</b> Without the connector it's working from general training, not your real data. The connector is what lets it reach the actual data."
           }
         ],
         "apply": {
@@ -5632,75 +5632,75 @@
   "presentation": {
     "1": {
       "title": "What is this thing, really?",
-      "subtitle": "Session 1 · Foundations — meet the sheepdog, learn to check the gate",
+      "subtitle": "Session 1 · Foundations — what an AI model is, and how to check its work",
       "slides": [
         {
           "title": "Welcome to the Duck Pond",
-          "body": "**Session 1 — What is this thing, really?**\n\n- 4 sessions, one farm\n- You're the farmer. This is your working dog.\n- By the end of today: you'll know *why* a confident answer can still be wrong\n- No jargon. No hype. Just the real thing.",
-          "notes": "Right, welcome everyone. Over the next few weeks we're going to get genuinely good at this stuff together — not buzzword-good, actually-useful-on-a-Monday good. And the way we're going to think about all of it is a farm. You're the farmer, you run the place, and the AI is a clever working sheepdog that does the legwork for you. Hold that picture, because everything today hangs off it.",
-          "visual": "🐑"
+          "body": "**Session 1 — What is this thing, really?**\n\n- 4 sessions, one goal: use this well at work\n- You give the instructions. The AI does the legwork.\n- By the end of today: you'll know *why* a confident answer can still be wrong\n- No jargon. No hype. Just the real thing.",
+          "notes": "Right, welcome everyone. Over the next few weeks we're going to get genuinely good at this stuff together — not buzzword-good, actually-useful-on-a-Monday good. The simple idea that runs through all of it: you give the instructions and the AI does the legwork for you — looking things up, drafting, pulling reports. Your job is to direct it and to check what it brings back. Hold onto that, because everything today builds on it.",
+          "visual": "💬"
         },
         {
           "title": "Where we're going today",
-          "body": "**The map for the next 25 minutes**\n\n- The sheepdog — what this thing actually is\n- Whistle → walk the field → open the gates\n- What \"agentic\" really means\n- Right dog for the job (and which Claude)\n- Feed, focus & fresh starts\n- Begin with the end\n- TRACE — the gate-check\n- Then *you* go practice",
-          "notes": "Here's the shape of it. We'll start by meeting the dog and learning its one big flaw. Then we'll walk through the three ways you can work with it, what people mean by 'agentic', how to pick the right tool, and a couple of habits that'll save you time and money. We finish with TRACE — your five-second gate-check — and then I let you loose on your own missions in the app. Keep your questions coming as we go.",
+          "body": "**The map for the next 25 minutes**\n\n- What this thing actually is\n- Three ways to use it: prompt → add your files → connect your tools\n- What \"agentic\" really means\n- Right tool for the job (and which Claude)\n- Cost, context limits & fresh starts\n- Begin with the end\n- TRACE — your quick check before you trust an answer\n- Then *you* go practice",
+          "notes": "Here's the shape of it. We'll start with what an AI model actually is and its one big flaw. Then the three ways you can work with it, what people mean by 'agentic', how to pick the right tool, and a couple of habits that'll save you time and money. We finish with TRACE — your five-second check before you act on anything it gives you — and then I let you loose on your own missions in the app. Keep your questions coming as we go.",
           "visual": "🗺️"
         },
         {
-          "title": "Meet the sheepdog",
-          "body": "**A brilliant young dog on its first morning**\n\n- Champion lines: fast, sharp, *desperate* to please\n- But it's never seen your fields or your flock\n- Send it out and it'll proudly bring back... the neighbour's sheep\n- It runs on instinct and training — not on *your* farm\n\n> A confident dog isn't a correct dog.",
-          "notes": "So here's what an AI model actually is. Picture a sheepdog bred from champion lines — lightning quick, brilliant instincts, and absolutely desperate to bring something back to you. But this morning is its first morning. It's never seen our fields, never met our flock. So you send it out and it races off full of confidence and sometimes herds back the neighbour's sheep — just as pleased with itself either way. It's working off general training, not knowledge of our business. Remember that: a confident dog is not a correct dog.",
+          "title": "What an AI model actually is",
+          "body": "**Brilliant, fast, eager to help — but it doesn't know our business**\n\n- Trained on huge amounts of general text: quick, fluent, keen to give you an answer\n- But it has never seen Bikeluggage's products, our customer emails, or our BigQuery data\n- Ask it a fitment question cold and it'll confidently give you a plausible-sounding answer that may be wrong\n- It runs on general training — not on *our* actual data\n\n> A confident answer isn't a correct answer.",
+          "notes": "So here's what an AI model actually is. It's been trained on an enormous amount of general text, which makes it fast, fluent, and very keen to give you an answer. But out of the box it has never seen our Bikeluggage product catalogue, our customer emails, or our BigQuery numbers. So if you ask it cold whether a pannier fits a particular bike, it'll answer confidently — and it might be plain wrong, because it's guessing from general training, not from our data. Remember that: a confident answer is not a correct answer.",
           "demo": "In Claude, ask: \"In one short paragraph, what's the difference between sounding confident and being correct?\" — watch how fluently it answers either way.",
-          "visual": "🐕"
+          "visual": "🤖"
         },
         {
           "title": "Fluency isn't truth",
-          "body": "**The dangerous bit**\n\n- A guess and a checked fact come back in the *same confident voice*\n- It would rather bring back the wrong sheep than come home empty\n- You can't tell by the tone\n- So you never trust the tone — you check whether it *actually looked*",
-          "notes": "And this is the part that catches everyone out. When the dog trots back, a wild guess and a properly-checked fact arrive in exactly the same proud, confident way. The model is brilliant at sounding sure — that's literally what it's built to do. So the lesson for today, the one that underpins everything: you never judge an answer by how confident it sounds. You check whether it actually went and looked. That single habit is what separates people who get burned from people who get value.",
+          "body": "**The dangerous bit**\n\n- A guess and a checked fact come back in the *same confident voice*\n- The model is built to give you a fluent answer, not to admit it doesn't know\n- You can't tell which one you got from the tone\n- So you never trust the tone — you check whether it *actually looked things up*",
+          "notes": "And this is the part that catches everyone out. When an answer comes back, a wild guess and a properly-checked fact arrive in exactly the same confident, fluent way. The model is brilliant at sounding sure — that's literally what it's built to do. So the lesson for today, the one that underpins everything: you never judge an answer by how confident it sounds. You check whether it actually went and looked at real data. That single habit separates people who get burned from people who get value.",
           "visual": "🎭"
         },
         {
-          "title": "Whistle, walk, or open the gates",
-          "body": "**Three ways to work the dog**\n\n- **Whistle from the yard** — plain ChatGPT-style prompt. Just your command + its general training.\n- **Walk it round the field** — attach files, show it *this* flock. Now it works from your specifics.\n- **Open the gates** — connectors. It gets into your *real* fields: Shopify, BigQuery.\n\n> From *talking about* your data → to *working on* it.",
-          "notes": "There are three ways to work the dog, and they're a ladder. The first is whistling a command from the yard — that's a plain prompt, just you and the dog's general training, nothing about our farm. The second is walking it round the field first, showing it this flock — that's attaching a file or pasting context, so now it's working from our specifics. And the third, the big one, is opening the gates to the actual fields — connecting it to our real Shopify and BigQuery so it's working our real livestock, not a description of it. The whole course is really about climbing that ladder.",
-          "visual": "🚪"
+          "title": "Three ways to use it",
+          "body": "**Each step gives it more of your real information**\n\n- **Just a prompt** — like plain ChatGPT. Only your question + its general training. It knows nothing about us.\n- **Add your files** — attach or paste *this* product spec, *this* customer email. Now it works from our specifics.\n- **Connect your tools** — connectors let it reach our real systems: Shopify, BigQuery.\n\n> From *talking about* our data → to *working on* it.",
+          "notes": "There are three ways to use it, and they build on each other. The first is just a prompt — like plain ChatGPT, only your question and its general training, nothing about our business. The second is adding your files — attach the actual product spec or paste the real customer email, so now it's working from our specifics instead of guessing. The third, the big one, is connecting it to our real tools — our actual Shopify store and our BigQuery data — so it's working on the real thing, not a description of it. The whole course is really about moving up those three steps.",
+          "visual": "🔌"
         },
         {
           "title": "What \"agentic\" actually means",
-          "body": "**A dog that rounds the sheep up — not one that barks where they are**\n\n- A chatbot *tells* you where the sheep are\n- An agent goes and *brings them in*\n- Looks it up, pulls the report, drafts the reply, takes the next step\n\n> Far more useful — which is *exactly* why checking its work matters more, not less.",
-          "notes": "You'll hear the word 'agentic' a lot, so let's demystify it. An old-style chatbot is a dog that barks to tell you where the sheep are — useful, but you still do the work. An agent is a dog that actually goes and brings them in: it looks things up, pulls the report, drafts the reply, and takes the next step itself. That's a huge leap in usefulness. But notice — the more the dog does on its own, the more it matters that you check what it brought back. Capability and checking go up together, never apart.",
-          "visual": "🐏"
+          "body": "**It doesn't just tell you what to do — it goes and does it**\n\n- A plain chatbot *tells* you where to find the answer\n- An agent *takes the steps itself*\n- Looks it up, pulls the report, drafts the reply, then takes the next action\n\n> Far more useful — which is *exactly* why checking its work matters more, not less.",
+          "notes": "You'll hear the word 'agentic' a lot, so let's demystify it. An old-style chatbot tells you where to find something — useful, but you still do the work. An agent actually does it: it looks the order up, pulls the report, drafts the customer reply, and takes the next step itself. That's a huge leap in usefulness. But notice — the more it does on its own, the more it matters that you check what it produced. Capability and checking go up together, never apart.",
+          "visual": "⚙️"
         },
         {
-          "title": "Don't plough a field with the sheepdog",
-          "body": "**Right tool, right job — Claude first**\n\n- **Claude** = our working dog: connected to the real fields, great at drafting in our voice\n- **Codex / coding agents** = the *tractor* — bring it in to *build or automate*\n- **Gemini & others** = different animals (very long docs, Google tie-ins)\n\n**Within Claude — breeds for jobs:**\n- **Opus** — strongest, for hard thinking\n- **Sonnet** — the balanced everyday dog\n- **Haiku** — quick one for simple, high-volume work",
-          "notes": "We're standardising on Claude, and here's the honest reason: it's the dog that's connected to our real fields and it's strong across the jobs this team actually does. But being good at this means knowing you don't plough a field with a sheepdog — you bring the tractor. So Codex and coding agents are the tractor, for when it's time to build or automate something. Gemini and the rest are different animals with their own strengths. And within Claude there are breeds: Opus is your strongest worker for hard reasoning, Sonnet's the balanced everyday dog, Haiku's the quick one for simple high-volume jobs. Pick the lightest one that does the job well, and keep half an eye on your usage.",
-          "visual": "🚜"
+          "title": "Right tool for the job — Claude first",
+          "body": "**Right tool, right job**\n\n- **Claude** = our default: connected to our real systems, great at drafting in our voice\n- **Codex / coding agents** = for *building or automating* software — bring them in for that\n- **Gemini & others** = different strengths (very long documents, Google tie-ins)\n\n**Within Claude — pick the model for the job:**\n- **Opus** — strongest, for hard thinking\n- **Sonnet** — the balanced everyday choice\n- **Haiku** — fast and cheap, for simple, high-volume work",
+          "notes": "We're standardising on Claude, and here's the honest reason: it's connected to our real systems and it's strong across the jobs this team actually does. But being good at this means knowing when to reach for something else. Codex and coding agents are the tool when it's time to build or automate software. Gemini and the rest have their own strengths, like very long documents. And within Claude you pick the model: Opus is strongest for hard reasoning, Sonnet is the balanced everyday choice, and Haiku is fast and cheap for simple high-volume jobs. Pick the lightest one that does the job well, and keep half an eye on your usage.",
+          "visual": "🧰"
         },
         {
-          "title": "Feed, focus & fresh starts",
-          "body": "**Every job burns feed — that's tokens, and tokens are money**\n\n- The dog only holds **so much in its head** (the context window)\n- A long, rambling all-day chat → it loses the thread. **Start a fresh, rested dog.**\n- A sloppy question to the Reservoir = trampling *every* field to find one sheep\n- It's **weak at exact sums** and not perfectly repeatable — all the more reason to check",
-          "notes": "Two quick, money-saving habits. First: the dog can only hold so much in its head at once. In one long rambling all-day conversation it starts losing the thread and getting muddled — so when a chat goes sideways, don't push on, start a fresh rested dog with a new chat. Second: when we query our big data Reservoir, a vague 'give me everything' is the dog trampling every field to find one sheep, and that actually costs real money because it scans millions of rows. Ask tight, specific questions. And know the dog's honest weaknesses — it's bad at exact maths and you can ask the same thing twice and get slightly different answers. Which is the perfect setup for the most important habit of all.",
-          "visual": "🌾"
+          "title": "Cost, context limits & fresh starts",
+          "body": "**Every request costs tokens — and tokens are money**\n\n- The model can only hold **so much at once** (the context window)\n- A long, rambling all-day chat → it loses the thread. **Start a fresh chat.**\n- A sloppy BigQuery query *scans — and bills you for — far more data than you need*\n- It's **weak at exact sums** and not perfectly repeatable — all the more reason to check",
+          "notes": "Two quick, money-saving habits. First: the model can only hold so much at once — that's the context window. In one long rambling all-day conversation it starts losing the thread and getting muddled, so when a chat goes sideways, don't push on — start a fresh chat. Second: when we query BigQuery, a vague 'give me everything' makes it scan, and bill us for, millions of rows when we only needed last week's orders. Ask tight, specific questions. And know the honest weaknesses — it's bad at exact maths and you can ask the same thing twice and get slightly different answers. Which is the perfect setup for the most important habit of all.",
+          "visual": "🪙"
         },
         {
           "title": "Begin with the end",
-          "body": "**Know what a good harvest looks like before you open the gate**\n\n- Picture the prize first: what does a *good* answer actually look like?\n- A good fitment answer names the bike *and* why the part doesn't fit\n- A good sales number = last week's net sales from the marts, query shown\n- Write it in *one sentence* — now you've got something to check against\n\n> Most bad AI output isn't wrong — it's *aimed at the wrong target.*",
-          "notes": "Here's a tip that'll change how you work, and it's Callum's favourite. Before you ever send the dog out, picture the prize — decide what a genuinely good result looks like. A good fitment answer names the bike and the actual reason the part doesn't fit. A good sales number is last week's net sales from the right data, with the query shown. Write that down in one sentence first. Because now, when the dog trots back, you've got something concrete to hold its work against. Most bad AI output isn't really wrong — it's just aimed at the wrong target. Define good up front.",
+          "body": "**Decide what a good answer looks like before you ask**\n\n- Picture the result first: what does a *good* answer actually contain?\n- A good fitment answer names the bike *and* why the part doesn't fit\n- A good sales number = last week's net sales from the right data, query shown\n- Write it in *one sentence* — now you've got something to check against\n\n> Most bad AI output isn't wrong — it's *aimed at the wrong target.*",
+          "notes": "Here's a tip that'll change how you work, and it's Callum's favourite. Before you ever send a request, picture the result — decide what a genuinely good answer looks like. A good fitment answer names the bike and the actual reason the part doesn't fit. A good sales number is last week's net sales from the right data, with the query shown. Write that down in one sentence first. Because now, when the answer comes back, you've got something concrete to hold it against. Most bad AI output isn't really wrong — it's just aimed at the wrong target. Define good up front.",
           "demo": "In Claude, before asking your real question, type: \"Before you answer, restate in one line what a complete, correct answer to this would include.\"",
           "visual": "🎯"
         },
         {
-          "title": "TRACE — the gate-check",
-          "body": "**You never shut the gate without counting the flock**\n\n- **T — Traceable:** did it actually look, or just describe what it *would* do?\n- **R — Real:** are the SKUs, orders, prices genuine and findable?\n- **A — Accurate to intent:** did it answer the *exact* question?\n- **C — Contained:** read-only? No customer PII? No Reservoir write?\n- **E — Enough to act:** would you send it / publish it as-is?",
-          "notes": "And this is the through-line of the whole course — TRACE. You'd never shut the gate on your flock without counting them and checking they're yours and sound. TRACE is that same gate-check for anything the AI hands you. Traceable — did it actually go and look, or just describe what it would do. Real — are the numbers genuine and findable. Accurate to intent — did it answer the exact question you asked. Contained — was it read-only, no customer private data, no writing to our shared data. And Enough — would you actually act on this as it stands. Five seconds at the gate. Every single time.",
+          "title": "TRACE — check before you trust it",
+          "body": "**Never act on an answer without a quick check**\n\n- **T — Traceable:** did it actually look, or just describe what it *would* do?\n- **R — Real:** are the SKUs, orders, prices genuine and findable?\n- **A — Accurate to intent:** did it answer the *exact* question?\n- **C — Contained:** read-only? No customer PII? No write to BigQuery?\n- **E — Enough to act:** would you send it / publish it as-is?",
+          "notes": "And this is the through-line of the whole course — TRACE. You'd never send a customer reply or trust a sales figure without a quick check first. TRACE is that check for anything the AI hands you. Traceable — did it actually go and look, or just describe what it would do. Real — are the SKUs, orders and prices genuine and findable. Accurate to intent — did it answer the exact question you asked. Contained — was it read-only, no customer private data, no writing to our shared BigQuery data. And Enough — would you actually act on this as it stands. Five seconds, every single time.",
           "visual": "✅"
         },
         {
           "title": "Now go practice",
-          "body": "**Your turn — Session 1 missions are live in the app**\n\n- Each of you has a mission for your real job\n- One idea, one real task, one TRACE check\n- The dog does the legwork — *you* count the flock\n- Closed-book goal: \"I could do this Monday with the app shut.\"\n\n*Open the app → Session 1 → your mission.*",
+          "body": "**Your turn — Session 1 missions are live in the app**\n\n- Each of you has a mission for your real job\n- One idea, one real task, one TRACE check\n- The AI does the legwork — *you* check the result\n- Closed-book goal: \"I could do this Monday with the app shut.\"\n\n*Open the app → Session 1 → your mission.*",
           "notes": "That's the foundation — now the only way this sticks is by doing it. Open the app, go to Session 1, and you'll each find a mission built around your actual job. They're short: one idea, one real task, and you finish by running TRACE on what comes back. Don't aim to see every feature — aim for 'I could genuinely do this on Monday with the app closed.' I'll be walking round, so grab me. Off you go.",
-          "visual": "🐾"
+          "visual": "🚀"
         }
       ]
     },
@@ -5710,192 +5710,192 @@
       "slides": [
         {
           "title": "Session 2: Claude that acts — and the one rule",
-          "body": "Welcome back to the Duck Pond.\n\n- Last week: what this thing is\n- This week: what it can DO\n- And the one rule that keeps the whole farm safe",
-          "notes": "Welcome back, everyone. Last week we got our heads around what this thing actually is — a brilliant young sheepdog that doesn't know our farm yet. This week we open the gates and let it into our real fields, so it stops talking about our data and starts working on it. And there's one rule that comes with that — one rule that protects the whole business — and by the end of today every one of you will be able to say it in your own words.",
-          "visual": "🐑"
+          "body": "Welcome back to the Duck Pond.\n\n- Last week: what this thing is\n- This week: what it can DO\n- And the one rule that keeps our data safe for everyone",
+          "notes": "Welcome back, everyone. Last week we got our heads around what this thing actually is — a very capable assistant that doesn't yet know how Bikeluggage and Motoplanet run. This week we connect it to our real systems, so it stops just talking about our data and starts working on it — reading real Shopify products, real customer emails, real numbers from BigQuery. And there's one rule that comes with that — one rule that protects the whole business — and by the end of today every one of you will be able to say it in your own words.",
+          "visual": "✅"
         },
         {
           "title": "Where we're going today",
-          "body": "Five stops in about 25 minutes:\n\n- A quick recap, then: what can Claude actually SEE?\n- The farm logbook (memory)\n- THE RULE: the shared water trough\n- Keeping the farm safe\n- Then you go and practise",
-          "notes": "Here's the shape of the next twenty-five minutes. We'll recap last week in a sentence, then get hands-on with what Claude can actually see in our systems. We'll cover the farm logbook — how it remembers — then the big one, the one rule about our shared data. We'll finish with how we keep the farm safe, a real example, and then I hand it over to you to practise your own missions in the app. Nothing technical. Just farm sense.",
+          "body": "Five stops in about 25 minutes:\n\n- A quick recap, then: what can Claude actually SEE?\n- Memory: what Claude remembers about how we work\n- THE RULE: the shared data in BigQuery\n- Keeping our data and customers safe\n- Then you go and practise",
+          "notes": "Here's the shape of the next twenty-five minutes. We'll recap last week in a sentence, then get hands-on with what Claude can actually see in our systems — Shopify, BigQuery, your inbox. We'll cover memory — how it remembers how we work — then the big one, the one rule about our shared data. We'll finish with how we keep our data and our customers safe, a real example, and then I hand it over to you to practise your own missions in the app. Nothing technical. Just plain good sense.",
           "visual": "🗺️"
         },
         {
-          "title": "Recap: from whistling to opening the gates",
-          "body": "Three ways to work the dog:\n\n- Whistle from the yard = plain prompting\n- Walk it round the field = giving it context\n- Open the gates = connectors\n\nToday is all about opening the gates.",
-          "notes": "Quick recap. Last week we said there are three ways to work the dog. Whistling from the yard is plain prompting — it's just got your whistle and its general training. Walking it round the field first is giving it context, showing it this flock. And opening the gates to your real fields — that's connectors — where it works your actual livestock, not a description of it. Today is entirely about that third one: opening the gates.",
-          "visual": "🚪"
+          "title": "Recap: from asking to connecting",
+          "body": "Three ways to work with Claude:\n\n- Just ask it = plain prompting\n- Give it context first = describing our setup\n- Connect it to our systems = connectors\n\nToday is all about connecting it.",
+          "notes": "Quick recap. Last week we said there are three ways to work with Claude. The first is just asking it a question — it only has your question and its general training, nothing about us. The second is giving it context first — describing how Bikeluggage and Motoplanet work before you ask. The third is connecting it to our real systems — that's connectors — where it works on our actual Shopify products and real orders, not a description of them. Today is entirely about that third one: connecting it.",
+          "visual": "🔌"
         },
         {
-          "title": "A dog that fetches, not one that barks",
-          "body": "Agentic = it acts, not just answers.\n\n- A chatbot barks where the sheep are\n- An agent goes and brings them in\n- Looks it up, pulls the report, drafts the reply\n\nMore useful — so checking it matters MORE, not less.",
-          "notes": "So what does agentic mean? Picture the difference between a dog that barks to tell you where the sheep are, and a dog that actually goes and brings them in. That's the leap. Claude can now look things up in Shopify, pull a report from our data, draft the reply, and take the next step itself. That's enormously more useful — which is exactly why checking its work matters more now, not less. A busier dog needs a sharper farmer.",
-          "visual": "🐕"
+          "title": "It acts, it doesn't just answer",
+          "body": "Agentic = it does the work, not just talks about it.\n\n- A plain chatbot tells you where to look\n- An agent goes and gets it for you\n- Looks it up, pulls the report, drafts the reply\n\nMore useful — so checking it matters MORE, not less.",
+          "notes": "So what does agentic mean? It's the difference between an assistant that tells you where to find something and one that actually goes and gets it. That's the leap. Claude can now look a product up in Shopify, pull a report from BigQuery, draft the reply to a customer, and take the next step itself. That's enormously more useful — which is exactly why checking its work matters more now, not less. The more it does on its own, the more carefully we check the result.",
+          "visual": "⚙️"
         },
         {
           "title": "What can I actually see?",
-          "body": "Let's just ask it.\n\n- It will tell you which gates are open\n- Shopify, the Reservoir, your inbox\n- Different for each of your roles\n\nKnow your fields before you send the dog out.",
-          "notes": "Before we do anything clever, let's just ask Claude what it can see. This is the most grounding thing you can do — it'll tell you exactly which gates are open for you. Immy's view of the fields is different from Abbie's, and that's fine. The point is you should always know which fields you're working before you send the dog out. Let me run this live so you can see what comes back.",
+          "body": "Let's just ask it.\n\n- It will tell you which connectors are switched on\n- Shopify, BigQuery, your inbox\n- Different for each of your roles\n\nKnow what you can reach before you start.",
+          "notes": "Before we do anything clever, let's just ask Claude what it can see. This is the most grounding thing you can do — it'll tell you exactly which connectors are switched on for you. Immy's access is different from Abbie's, and that's fine. The point is you should always know which systems you're working with before you start. Let me run this live so you can see what comes back.",
           "demo": "Ask Claude: \"What tools and connectors do you currently have access to? List each one and, in plain English, what kind of information or action it gives you. Don't access anything yet — just tell me what's available.\"",
           "visual": "👀"
         },
         {
-          "title": "The farm logbook",
-          "body": "Memory = the logbook in the barn.\n\n- Without it, you re-explain the farm every morning\n- With it, the dog knows our routines and our voice\n- YOU decide what goes in — and can change it\n- Golden rule: never write a customer's private details in it",
-          "notes": "Now, memory. Think of it as the logbook in the barn. Without it, you'd have to re-explain the whole farm to the dog every single morning. With it, Claude already knows our routines — that we write in the BikeLuggage voice, that we never quote a price we haven't checked. The two things to hold onto: you decide what goes in that logbook and you can change it anytime. And you never, ever write a customer's private details in it. The logbook is for how we work, not for who our customers are.",
-          "visual": "📒"
+          "title": "Memory: what Claude remembers",
+          "body": "Memory = the notes Claude keeps on how we work.\n\n- Without it, you re-explain how we work every morning\n- With it, it already knows our routines and our voice\n- YOU decide what goes in — and can change it\n- Golden rule: never write a customer's private details in it",
+          "notes": "Now, memory. Think of it as a set of notes Claude keeps on how we do things. Without it, you'd have to re-explain how Bikeluggage and Motoplanet run every single morning. With it, Claude already knows our routines — that we write in the Bikeluggage voice, that we never quote a price we haven't checked. The two things to hold onto: you decide what goes in those notes and you can change them anytime. And you never, ever write a customer's private details in them. Memory is for how we work, not for who our customers are.",
+          "visual": "📝"
         },
         {
-          "title": "THE ONE RULE: the shared water trough",
-          "body": "The Reservoir is the trough the whole farm drinks from.\n\n- Anyone COULD tip something in — no lock on the lid\n- Only Yas is allowed to\n- One bad thing in the trough sickens the whole herd\n\nBeing able to do something is not permission to do it.",
-          "notes": "Right — this is the one. The Reservoir is our shared data, and it's the water trough the whole farm drinks from. Here's the thing: there's no lock on the lid. Any one of you could technically tip something in. But only Yas is allowed to write to it. Why so strict? Because one bad thing in the trough doesn't just spoil your cup — it sickens the whole herd. Everyone downstream drinks a wrong number. So the rule, and please carry this one home: being able to do something is not the same as permission to do it. For all of us, the Reservoir is read-only.",
-          "visual": "🪣"
+          "title": "THE ONE RULE: the shared data in BigQuery",
+          "body": "The Reservoir (BigQuery) is the shared data everyone's reports run on.\n\n- Everyone CAN edit it — there's no technical lock\n- Only Yas is allowed to\n- One bad write breaks everyone's numbers\n\nBeing able to do something is not permission to do it.",
+          "notes": "Right — this is the one. The Reservoir is our shared data in BigQuery, and every report across both shops runs on it. Here's the thing: there's no technical lock stopping you. Any one of you could technically write to it. But only Yas is allowed to. Why so strict? Because one bad write doesn't just affect your report — it breaks everyone's numbers. Everyone whose reports run on that data gets a wrong figure. So the rule, and please carry this one home: being able to do something is not the same as having permission to do it. For all of us, the Reservoir is read-only.",
+          "visual": "🔒"
         },
         {
-          "title": "The shape of the Reservoir",
-          "body": "Your produce moves from paddock to shelf:\n\n- Muddy paddock = raw (unwashed, can mislead)\n- Washed and sorted = staging\n- Stored in the barn = core (clean shared facts)\n- Farm-shop shelf = marts (ready to use)\n\nTake your numbers from the shelf, not the paddock.",
-          "notes": "The Reservoir isn't one puddle — our data moves through stages, just like produce before it's fit to sell. Straight off the source it's the muddy paddock: raw, unwashed, it can mislead you. Then it gets washed and sorted, stored clean in the barn, and finally laid out on the farm-shop shelf, ready to use. When you ask Claude for a number, ask it to take it from the shelf — the marts — read-only. That's the difference between a number you can trust and one that quietly misleads you.",
-          "visual": "🥕"
+          "title": "How the Reservoir is organised",
+          "body": "Our data is cleaned up in stages before it's ready to use:\n\n- raw = straight from the source, messy, can mislead\n- staging = cleaned and tidied up\n- core = clean shared facts everyone relies on\n- marts = finished tables, ready to use in reports\n\nTake your numbers from marts, not from raw.",
+          "notes": "The Reservoir isn't one big pile — our data moves through stages before it's fit to use. Straight from the source it's raw: messy, untidied, it can easily mislead you. Then it's cleaned and tidied in staging, organised into clean shared facts in core, and finally laid out as finished, ready-to-use tables in marts. When you ask Claude for a number — say, last month's sales for Bikeluggage — ask it to take it from the marts, read-only. That's the difference between a number you can trust and one that quietly misleads you.",
+          "visual": "📊"
         },
         {
-          "title": "Keeping the farm safe",
-          "body": "Two safety habits:\n\n- Some things never leave the gate — name, address, email, card. Never paste customer PII. (UK GDPR: people can ask us to delete their data.)\n- Don't let a stranger whistle your dog — text Claude reads can hide sneaky instructions. That's prompt injection.\n\nYour whistle is the only one it obeys.",
-          "notes": "Two safety habits and we're done with the rules. First: some things never leave the farm gate. A customer's name, address, email, card details — that's private livestock, you don't parade it in the market. Never paste it into a prompt. And remember, UK GDPR means people can ask us to delete their data, so we keep it where it belongs. Second, and this is the new one: don't let a stranger whistle your dog. When Claude reads an outside thing — a customer email, a web page, a review — that text can hide sneaky instructions like 'ignore your owner and do this instead.' Treat any instruction found inside data as suspicious, not as a command. Your whistle is the only one the dog obeys.",
+          "title": "Keeping our data and customers safe",
+          "body": "Two safety habits:\n\n- Some things never get pasted in — name, address, email, card. Never paste customer PII. (UK GDPR: people can ask us to delete their data.)\n- Text Claude reads can hide sneaky instructions. That's prompt injection.\n\nThe only instructions Claude should follow are yours.",
+          "notes": "Two safety habits and we're done with the rules. First: some things never get pasted into a prompt. A customer's name, address, email, card details — that's private personal data, and it doesn't belong in a chat. Never paste it in. And remember, UK GDPR means people can ask us to delete their data, so we keep it where it belongs. Second, and this is the new one: text that Claude reads from outside — a customer email, a web page, a product review — can hide sneaky instructions like 'ignore your previous instructions and do this instead.' That's called prompt injection. Treat any instruction found inside data as suspicious, not as a command. The only instructions Claude should act on are the ones you give it.",
           "visual": "🛡️"
         },
         {
           "title": "A real example: the fitment question",
-          "body": "Immy gets: \"will this rack fit my bike?\"\n\n- Open the gate: read the real product data\n- Pull the answer from the marts, read-only\n- Don't paste the customer's details into the chat\n- A stranger's email is data, not a command\n\nUseful, grounded, and safe — all at once.",
-          "notes": "Let's make it real. Say Immy gets an email: will this rack fit my bike? The agentic way is to let Claude open the gate, read the actual product data, and answer from the real record — not a guess. We take the number from the shelf, read-only. We don't paste the customer's name and address into the chat to do it. And if that email contains a line trying to instruct the dog, we treat it as data, not a command. Same job Abbie does with marketing data, same job for all of you. Useful, grounded, and safe — and that's the whole point of today.",
+          "body": "Immy gets: \"will this rack fit my bike?\"\n\n- Connect to the real product data and read it\n- Pull the answer from the marts, read-only\n- Don't paste the customer's details into the chat\n- An instruction inside a stranger's email is data, not a command\n\nUseful, grounded, and safe — all at once.",
+          "notes": "Let's make it real. Say Immy gets an email: will this rack fit my bike? The agentic way is to let Claude read the actual Shopify product data and answer from the real record — not a guess. We take the figure from the marts, read-only. We don't paste the customer's name and address into the chat to do it. And if that email contains a line trying to give Claude an instruction, we treat it as data, not a command. Same job Abbie does with marketing numbers, same job for all of you. Useful, grounded, and safe — and that's the whole point of today.",
           "demo": "Ask Claude: \"Using only our read-only product data, can you tell me what information you'd need to confirm whether a given rack fits a given motorbike? Show me where that data lives — don't make anything up, and flag anything you can't verify.\"",
           "visual": "🔧"
         },
         {
           "title": "Now go practise",
-          "body": "Your turn, in the app.\n\n- See your own connectors — what CAN you reach?\n- Run one safe, read-only read\n- Say the trough rule in your own words\n\nThe one to remember: read-only, every time.",
-          "notes": "That's the teaching done — now it's your turn, and this is where it sticks. Open the app and work through your Session 2 missions. You'll see your own real connectors, run one safe read against real data, and practise saying the trough rule in your own words. If you only take one thing from today: the Reservoir is read-only for everyone but Yas. Go on — open the gate and have a go. I'll be right here.",
+          "body": "Your turn, in the app.\n\n- See your own connectors — what CAN you reach?\n- Run one safe, read-only read\n- Say the Reservoir rule in your own words\n\nThe one to remember: read-only, every time.",
+          "notes": "That's the teaching done — now it's your turn, and this is where it sticks. Open the app and work through your Session 2 missions. You'll see your own real connectors, run one safe read against real data, and practise saying the Reservoir rule in your own words. If you only take one thing from today: the Reservoir is read-only for everyone but Yas. Go on — give it a try. I'll be right here.",
           "visual": "🚀"
         }
       ]
     },
     "3": {
       "title": "Stop Repeating Yourself",
-      "subtitle": "Session 3 · Setting up the farm: skills, plugins & connectors",
+      "subtitle": "Session 3 · Setting up your tools: skills, plugins & connectors",
       "slides": [
         {
           "title": "Stop Repeating Yourself",
-          "body": "Session 3 · Setting up the farm\n\n- Skills, plugins & connectors\n- Turn the job you keep redoing into one you do once\n- ~25 min, then you build your own",
-          "notes": "Morning all. Last week we opened the gates and let the dog into your real fields. Today is about something every one of you already feels in your gut: you keep typing the same instructions over and over. By the end of this you'll know how to teach the dog a command once, so you never have to whistle the whole thing again.",
-          "visual": "🐕"
+          "body": "Session 3 · Setting up your tools\n\n- Skills, plugins & connectors\n- Turn the job you keep redoing into one you do once\n- ~25 min, then you build your own",
+          "notes": "Morning all. Last week we connected Claude to your real systems. Today is about something every one of you already feels: you keep typing the same instructions over and over. By the end of this you'll know how to save a set of instructions once, so you never have to type the whole thing again.",
+          "visual": "🔁"
         },
         {
           "title": "Where we've got to",
-          "body": "A quick look back\n\n- Wk1: the dog is clever but doesn't know our farm\n- Wk2: we opened the gates — Claude works your real data\n- Always: count the flock at the gate (TRACE)\n\nToday: stop re-explaining the same job.",
-          "notes": "Three quick reminders so we're all stood in the same field. Claude is a brilliant young sheepdog that's fast and keen but doesn't know our farm until we show it. Last week we connected it to your real Shopify and the Reservoir. And every single time, we check what it brings back before we shut the gate. Today builds straight on that.",
+          "body": "A quick look back\n\n- Wk1: Claude is capable but doesn't know our business\n- Wk2: we connected it to your real data\n- Always: check the result before you trust it (TRACE)\n\nToday: stop re-explaining the same job.",
+          "notes": "Three quick reminders so we're all on the same page. Claude is fast and capable but it doesn't know Bikeluggage or Motoplanet until we tell it. Last week we connected it to your real Shopify and the Reservoir, our BigQuery data. And every single time, we check what it gives back before we act on it. Today builds straight on that.",
           "visual": "🔁"
         },
         {
           "title": "The thing you keep doing",
-          "body": "Be honest with me\n\n- Same prompt, retyped every Monday\n- 'Answer in our voice, no hype, cite the record…'\n- You're whistling the whole command, every time\n\nThere's a better way to set up the farm.",
-          "notes": "Hands up if you've got a prompt you basically retype every week — the same long instruction about tone, or sources, or format. That's not a flaw in you, it's a sign. When you find yourself whistling the same long command over and over, the farm's telling you it's time to set something up properly. That's what today is.",
+          "body": "Be honest with me\n\n- Same prompt, retyped every Monday\n- 'Answer in our voice, no hype, cite the record…'\n- You're typing the whole instruction, every time\n\nThere's a better way.",
+          "notes": "Hands up if you've got a prompt you basically retype every week — the same long instruction about tone, or sources, or format. That's not a flaw in you, it's a signal. When you find yourself typing the same long instruction over and over, that's the sign it's time to save it properly. That's what today is.",
           "visual": "😮‍💨"
         },
         {
           "title": "The toolbox: three things people mix up",
-          "body": "Setting up the farm — three parts\n\n- Connector = the KEY to a field's gate\n- Plugin = a NEW MACHINE on the farm\n- Skill = a TRAINED COMMAND you wrote once\n\nDifferent jobs. Don't confuse them.",
-          "notes": "There are three words that get tangled together, so let's untangle them on the farm. A connector is the key that lets the dog into a real field — Shopify, the Reservoir, Notion. A plugin is a new machine — a quad bike, an attachment — it lets you do something you physically couldn't before. And a skill is a trained command you taught the dog once: 'this is exactly how we bring the flock in at dusk.' Let's take them one at a time.",
+          "body": "Three parts, three jobs\n\n- Connector = access to one of your systems\n- Plugin = a new ability Claude didn't have\n- Skill = saved instructions you wrote once\n\nDifferent jobs. Don't confuse them.",
+          "notes": "There are three words that get tangled together, so let's untangle them. A connector gives Claude access to one of your real systems — Shopify, the Reservoir, Notion, your inbox. A plugin gives it a brand new ability it couldn't do before. And a skill is a set of instructions you wrote down once: 'this is exactly how we draft a returns reply.' Let's take them one at a time.",
           "visual": "🧰"
         },
         {
-          "title": "Connector = the key to the gate",
-          "body": "What lets the dog into a real field\n\n- Shopify, BigQuery, Notion, your inbox\n- No key, no access to the livestock\n- You already met these in Week 2\n\nIt's about ACCESS, not skill.",
-          "notes": "The connector is the one you've already met. It's the key to a gate — without it the dog is stood outside describing the field from memory. With it, the dog is in there working your actual livestock. A connector doesn't make the dog cleverer, it just gives it access to something real. That's the whole job of a connector: access.",
+          "title": "Connector = access to a real system",
+          "body": "What lets Claude reach your real data\n\n- Shopify, BigQuery, Notion, your inbox\n- No connection, no access to the real data\n- You already met these in Week 2\n\nIt's about ACCESS, not skill.",
+          "notes": "The connector is the one you've already met. Without it, Claude is just describing your store from memory. With it, Claude is working on your actual Shopify products, your real customer emails, your real BigQuery numbers. A connector doesn't make Claude cleverer, it just gives it access to something real. That's the whole job of a connector: access.",
           "visual": "🔑"
         },
         {
-          "title": "Plugin = a new machine",
-          "body": "Extends what can actually be done\n\n- A quad bike, a new attachment\n- Adds a capability you didn't have\n- You bolt it on when you need it\n\nIt's about a NEW ABILITY.",
-          "notes": "A plugin is a new machine on the farm — a quad bike, a baler, an attachment. It doesn't give access to a field, it gives you a brand new ability you simply didn't have before. You won't be bolting these on much day to day, but it's worth knowing the word so you don't confuse 'I need a new machine' with 'I need to teach a command.' Those are different problems.",
-          "visual": "🚜"
+          "title": "Plugin = a new ability",
+          "body": "Extends what can actually be done\n\n- Adds a capability Claude didn't have\n- Lets you do something new\n- You add it on when you need it\n\nIt's about a NEW ABILITY.",
+          "notes": "A plugin gives Claude a new ability it simply didn't have before. It doesn't connect you to a system, it adds a whole new capability. You won't be adding these much day to day, but it's worth knowing the word so you don't confuse 'I need a new ability' with 'I need to save some instructions.' Those are different problems.",
+          "visual": "🧩"
         },
         {
-          "title": "Skill = a trained command you wrote",
-          "body": "The one that changes your week\n\n- 'This is exactly how we do this job'\n- Named, reusable, repeatable\n- Taught once → used forever\n\nThe thing that STOPS you re-explaining.",
-          "notes": "And here's the one that'll change your week. A skill is a command you train the dog once — you write down exactly how a job gets done, give it a name, and from then on you just call its name. 'Do the Monday social check.' 'Draft a returns reply our way.' You taught it once, you use it forever. This is how you stop repeating yourself, and it's what you'll build today.",
+          "title": "Skill = saved instructions you wrote",
+          "body": "The one that changes your week\n\n- 'This is exactly how we do this job'\n- Named, reusable, repeatable\n- Written once → used forever\n\nThe thing that STOPS you re-explaining.",
+          "notes": "And here's the one that'll change your week. A skill is a set of instructions you write down once — exactly how a job gets done — give it a name, and from then on you just call its name. 'Do the Monday social check.' 'Draft a returns reply our way.' You wrote it once, you use it forever. This is how you stop repeating yourself, and it's what you'll build today.",
           "visual": "🎯"
         },
         {
           "title": "The decision rule",
-          "body": "When do you do which?\n\n- PROMPT — one-off → walk out and do it yourself\n- USE a skill — there's already a command for it\n- BUILD a skill — you've done it the same way 3 times\n\n3rd repeat = train it once.",
-          "notes": "Here's the rule I want you to actually remember. If it's a one-off, just prompt it — walk out and do the job yourself, no setup. If a command already exists for it, use the skill. And the magic number is three: the third time you catch yourself doing the same job the same way, stop and build a skill. Train it once, use it forever. Three strikes and you teach the dog.",
+          "body": "When do you do which?\n\n- PROMPT — one-off → just type it and do it\n- USE a skill — there's already one for it\n- BUILD a skill — you've done it the same way 3 times\n\n3rd repeat = save it once.",
+          "notes": "Here's the rule I want you to actually remember. If it's a one-off, just prompt it — type it and do the job, no setup. If a skill already exists for it, use it. And the magic number is three: the third time you catch yourself doing the same job the same way, stop and build a skill. Write it once, use it forever. Three times means it's time to save it.",
           "visual": "✋"
         },
         {
           "title": "Connecting a service",
-          "body": "Cutting a new key\n\n- Find the service → connect → grant access\n- Read-only where you can\n- Same gate-check rules apply (TRACE)\n\nA key only opens the gate — you still check the flock.",
-          "notes": "Quick word on connecting a new service, because it comes up. It's as simple as finding it in the list and granting access — you're cutting a new key for a gate. Two habits: keep it read-only wherever you can, and remember the key doesn't change the rules. The dog's in a new field now, but you still count the flock at the gate before you trust anything it brings back.",
+          "body": "Giving Claude access to a new system\n\n- Find the service → connect → grant access\n- Read-only where you can\n- Same checks still apply (TRACE)\n\nAccess alone isn't enough — you still check the result.",
+          "notes": "Quick word on connecting a new service, because it comes up. It's as simple as finding it in the list and granting access. Two habits: keep it read-only wherever you can, and remember access doesn't change the rules. Claude can reach a new system now, but you still check what it gives back before you trust anything it produces.",
           "visual": "🔐"
         },
         {
           "title": "Live demo: a repeated prompt becomes a skill",
-          "body": "Watch me train one command\n\n- Take a prompt I keep retyping\n- Write down exactly how the job's done\n- Save it, name it, call it back by name\n\nFrom 'whistle the whole thing' → 'call its name'.",
-          "notes": "Let me show you this live, because it lands better than any slide. I'll take a prompt I keep retyping, ask Claude to help me write it up as a proper repeatable method, and save it as a named skill. Then watch — I call it by name and the whole long instruction fires off. That's the moment it clicks: you do the work once, and the farm remembers.",
+          "body": "Watch me save one set of instructions\n\n- Take a prompt I keep retyping\n- Write down exactly how the job's done\n- Save it, name it, call it back by name\n\nFrom 'type the whole thing' → 'call its name'.",
+          "notes": "Let me show you this live, because it lands better than any slide. I'll take a prompt I keep retyping, ask Claude to help me write it up as a proper repeatable method, and save it as a named skill. Then watch — I call it by name and the whole long instruction fires off. That's the moment it clicks: you do the work once, and it's saved for next time.",
           "demo": "Here's a prompt I retype every week: 'Summarise this week's updates in a warm, plain-spoken voice, no hype, in 5 short bullets, and flag anything you couldn't verify.' Help me turn this into a clean, reusable skill: give it a clear name, write the method as numbered steps, list what I need to give it each time, and show me how I'd call it next week.",
           "visual": "💾"
         },
         {
           "title": "Why this is worth it",
-          "body": "What you actually get back\n\n- Less retyping, fewer fumbles\n- Same job done the same good way, every time\n- The team can share one trained command\n\nSet it up once. Stop re-explaining.",
-          "notes": "Step back and notice what just happened. You're not just saving keystrokes — you're saving the good version of the job, so it's done the same right way whether it's Monday or you're rushed or someone else runs it. That last bit matters: Yas can build a skill the whole team leans on, so we're all bringing the flock in the same way. That's a farm that's properly set up.",
+          "body": "What you actually get back\n\n- Less retyping, fewer fumbles\n- Same job done the same good way, every time\n- The team can share one saved skill\n\nSet it up once. Stop re-explaining.",
+          "notes": "Step back and notice what just happened. You're not just saving keystrokes — you're saving the good version of the job, so it's done the same right way whether it's Monday or you're rushed or someone else runs it. That last bit matters: Yas can build a skill the whole team leans on, so we all do the job the same way. That's having your tools properly set up.",
           "visual": "✅"
         },
         {
           "title": "Now go build your Session 3 skill",
-          "body": "Your turn — in the app\n\n- Open your Session 3 missions\n- Find a job you've done 3 times\n- Turn your best prompt into a saved skill\n- Then run TRACE on what it makes\n\nTeach the dog one command today.",
-          "notes": "Right — your turn, and this is the good bit. Head into your Session 3 missions in the app. Each of you has a real repeated job waiting: Abbie's synonyms list, Emyr's on-brand script, Immy's reply, and Yas a skill the whole team will use. Pick the job you keep redoing, turn your best prompt into a saved skill, and check its work at the gate. Go teach the dog one command — I'm here if you get stuck.",
-          "visual": "🚪"
+          "body": "Your turn — in the app\n\n- Open your Session 3 missions\n- Find a job you've done 3 times\n- Turn your best prompt into a saved skill\n- Then run TRACE on what it makes\n\nSave one set of instructions today.",
+          "notes": "Right — your turn, and this is the good bit. Head into your Session 3 missions in the app. Each of you has a real repeated job waiting: Abbie's synonyms list, Emyr's on-brand script, Immy's reply, and Yas a skill the whole team will use. Pick the job you keep redoing, turn your best prompt into a saved skill, and check its work before you trust it. Go save one set of instructions today — I'm here if you get stuck.",
+          "visual": "🚀"
         }
       ]
     },
     "4": {
       "title": "Agents working together — and how to trust them",
-      "subtitle": "Session 4 · The whole farm team at harvest, loops, and the judgment to know when to stop. Presented by Callum.",
+      "subtitle": "Session 4 · Several agents working at once to a plan, loops, and the judgment to know when to stop. Presented by Callum.",
       "slides": [
         {
           "title": "Welcome to Session 4",
-          "visual": "🚜",
-          "body": "**Agents working together — and how to trust them**\n\n- We've met the dog. Now we meet the team.\n- 25 minutes, then you build your own.\n- Same rule throughout: check the flock before you shut the gate.",
-          "notes": "Right, last one of the four. Up to now it's been you and one clever dog — sending it out, walking it round the field, teaching it commands. Today we bring in the whole farm team at harvest: several agents working at once, to a plan. And the more they can do on their own, the more it matters that we keep checking what they bring back. So nothing changes about the discipline — it just gets more important."
+          "visual": "👋",
+          "body": "**Agents working together — and how to trust them**\n\n- We've used one agent. Now we use several together.\n- 25 minutes, then you build your own.\n- Same rule throughout: check the result before you act on it.",
+          "notes": "Right, last one of the four. Up to now it's been you and one capable agent — giving it a task, watching how it works, teaching it commands. Today we use several agents at once, working to a plan. And the more they can do on their own, the more it matters that we keep checking what they produce. So nothing changes about the discipline — it just gets more important."
         },
         {
           "title": "Where we're going today",
           "visual": "🗺️",
-          "body": "**Four ideas, then you build.**\n\n- The farm team at harvest — multi-agent workflows\n- Loops — counting the flock through the gate\n- When NOT to — don't muster the farm for one egg\n- The app improving itself, live — and the TRACE capstone",
-          "notes": "Here's the shape of the next twenty-odd minutes. First, what a multi-agent workflow actually is, in plain terms. Then loops — the dog going round and round until the job's done. Then the bit that's really about maturity: knowing when all this machinery is overkill. And to finish, I'll show you the app improving itself, which is this exact lesson running live, and we'll do the final TRACE check. Then you go build your own."
+          "body": "**Four ideas, then you build.**\n\n- Several agents working at once — multi-agent workflows\n- Loops — repeating a step until a condition is met\n- When NOT to — don't build a workflow for a one-line job\n- The app improving itself, live — and the TRACE capstone",
+          "notes": "Here's the shape of the next twenty-odd minutes. First, what a multi-agent workflow actually is, in plain terms. Then loops — repeating a step over and over until the job's done. Then the bit that's really about maturity: knowing when all this machinery is overkill. And to finish, I'll show you the app improving itself, which is this exact lesson running live, and we'll do the final TRACE check. Then you go build your own."
         },
         {
           "title": "Quick recap — what we've built so far",
-          "visual": "🐕",
-          "body": "**Three sessions in, here's your dog.**\n\n- It can act, not just answer (agentic)\n- It works your real fields — read-only (connectors + the Reservoir)\n- You've taught it commands once and reused them (skills)\n\nOne dog, well-directed. Today: more than one.",
-          "notes": "Quick look back so it all connects. Session one, we learned the dog is brilliant but doesn't know our farm — so we check. Session two, we opened the gates to the real fields, read-only. Session three, you stopped repeating yourself and saved your best commands as skills. So you've got a well-trained dog that works real data. Today we ask: what happens when one dog isn't enough?"
+          "visual": "🧰",
+          "body": "**Three sessions in, here's what your agent can do.**\n\n- It can act, not just answer (agentic)\n- It works your real data — read-only (connectors + the Reservoir)\n- You've taught it commands once and reused them (skills)\n\nOne agent, well-directed. Today: more than one.",
+          "notes": "Quick look back so it all connects. Session one, we learned the agent is brilliant but doesn't know our business — so we check. Session two, we connected it to real data, read-only. Session three, you stopped repeating yourself and saved your best commands as skills. So you've got a well-directed agent that works real data. Today we ask: what happens when one agent isn't enough?"
         },
         {
-          "title": "The farm team at harvest",
-          "visual": "🌾",
-          "body": "**One worker doing every job in turn is slow.**\n\n- At harvest the whole team works at once — to a plan\n- One on the combine, one baling, one carting\n- The farmer checks the yield before it's stored\n\nA multi-agent workflow is that team, in AI form.",
-          "notes": "Picture harvest. If one person does the combining, then the baling, then the carting, one after the other, you'll be at it till Christmas. So at harvest the whole team turns out — everyone on their own job, all at once, to an agreed plan. And the farmer still walks over and checks the yield before it goes in the barn. A multi-agent workflow is exactly that: you split a big job into parts, run them together, bring it back, and you check it. The check at the end is not optional — it's the whole point."
+          "title": "Several agents working at once",
+          "visual": "⚙️",
+          "body": "**One agent doing every step in turn is slow.**\n\n- Split a big job into steps, run them in parallel\n- One pulls Shopify product facts, one drafts copy, one checks the numbers\n- You check the result at the end before anyone uses it\n\nA multi-agent workflow is exactly that.",
+          "notes": "Picture a big batch job — say, preparing next week's Bikeluggage product copy. If one agent does the research, then the drafting, then the checking, one after another, it's slow. So you split the job into steps and run them in parallel — one pulls the real Shopify product facts, one drafts the copy, one checks it. And you still look at the result before it goes out. A multi-agent workflow is exactly that: split a big job into steps, run them in parallel, bring it back, and check it. The check at the end is not optional — it's the whole point."
         },
         {
           "title": "What a workflow looks like",
           "visual": "🔗",
           "body": "**Split → run → bring together → check.**\n\n- Step 1: research — pull the real facts\n- Step 2: draft — write it up\n- Step 3: self-check — catch anything unverified before you see it\n\nThe check is a step, not an afterthought.",
-          "notes": "Let me make it concrete with the one Abbie's going to build. Batching next week's socials. Instead of one giant prompt that tries to do everything, you build a tiny team: one step pulls the real product facts, one drafts the posts, and a third checks the draft before it ever reaches a human. That third step is the farmer at the gate, built into the workflow. The magic isn't the cleverness — it's that the check has its own job and can't be skipped."
+          "notes": "Let me make it concrete with the one Abbie's going to build. Batching next week's socials. Instead of one giant prompt that tries to do everything, you build a tiny team of steps: one step pulls the real Shopify product facts, one drafts the posts, and a third checks the draft before it ever reaches a human. That third step is the human check, built into the workflow. The magic isn't the cleverness — it's that the check has its own job and can't be skipped."
         },
         {
-          "title": "Loops — counting the flock through the gate",
+          "title": "Loops — repeating a step until it's done",
           "visual": "🔁",
-          "body": "**Penning the flock isn't one sweep.**\n\n- Bring some in, count, go back for strays\n- Again — until all 200 are accounted for\n- A loop repeats a step, checking each time, **until** a condition is met\n\n\"Every page checked. No errors left. The count matches.\"",
-          "notes": "Now loops. When you pen the flock you don't do it in one go — you bring some in, count, notice you're short, go back out for the stragglers, count again, and you keep going round until every last sheep is in. A loop is the AI doing exactly that: repeat a step, check after each pass, and keep going until the condition's met. Emyr's mission is a loop that checks every product page is on-brand — round and round until there are none left to fix. The condition is what stops it. No condition, and the dog runs all night."
+          "body": "**Checking a long list isn't one pass.**\n\n- Do some, check, go back for the ones that failed\n- Again — until every item is accounted for\n- A loop repeats a step, checking each time, **until** a condition is met\n\n\"Every page checked. No errors left. The count matches.\"",
+          "notes": "Now loops. Say you're checking all 200 Motoplanet product pages. You don't do it in one pass — you check a batch, count, notice some still fail, go back and fix those, count again, and keep going until every page passes. A loop is the AI doing exactly that: repeat a step, check after each pass, and keep going until the condition's met. Emyr's mission is a loop that checks every product page is on-brand — round and round until there are none left to fix. The condition is what stops it. No condition, and it runs all night."
         },
         {
           "title": "Live: a tiny loop you can see",
@@ -5905,16 +5905,16 @@
           "notes": "Let me show you the shape of a loop so it's not abstract. I'll paste a handful of short blurbs and ask Claude to go through them one at a time against a simple rule, and stop only when it's done all five and given me a count. Watch how it works through the list and reports the tally at the end — that count IS the stop condition. That's all a loop is. You don't need to write code to picture it."
         },
         {
-          "title": "When NOT to bring out the team",
-          "visual": "🥚",
-          "body": "**Don't muster the whole farm to fetch one egg.**\n\n- Calling everyone in for one egg is slower than walking to the coop\n- One quick job → one prompt beats a workflow\n- Bring the team or the loop when the job is **big, repetitive, or splits into parallel parts**\n\nNot to look clever.",
-          "notes": "This is the slide that separates people who get it from people who just like the toys. You don't call in the entire farm team to collect a single egg — by the time they're assembled you could've walked to the coop and back. If it's one quick job, one prompt wins every time. Bring out the team, or build a loop, only when the work is genuinely big, repetitive, or splits cleanly into parallel parts. Reaching for a workflow to look clever is the most common beginner mistake. Knowing when not to is the real skill."
+          "title": "When NOT to build a workflow",
+          "visual": "✋",
+          "body": "**Don't build a whole workflow for a one-line job.**\n\n- Setting up steps and agents for one quick task takes longer than just doing it\n- One quick job → one prompt beats a workflow\n- Build the workflow or the loop when the job is **big, repetitive, or splits into parallel parts**\n\nNot to look clever.",
+          "notes": "This is the slide that separates people who get it from people who just like the toys. If the task is 'rewrite this one product description', you don't stand up a multi-step workflow — by the time you've wired it together you could have just done it. If it's one quick job, one prompt wins every time. Build a workflow, or a loop, only when the work is genuinely big, repetitive, or splits cleanly into parallel parts. Reaching for a workflow to look clever is the most common beginner mistake. Knowing when not to is the real skill."
         },
         {
           "title": "The app improving itself — this lesson, live",
           "visual": "♻️",
           "body": "**Agents propose. A human approves. Nothing else.**\n\n- Tonight the app's own agents read your feedback and draft better missions\n- They CAN generate endlessly — but nothing reaches the team until I approve it\n- Capability is not authorisation",
-          "notes": "Here's the best part — this app practises what we preach. It has its own farm team that reads your feedback and proposes new and clearer missions. Now those agents could churn out content all night. But not one word reaches you until I open the queue, read it like a sceptic, and approve it. That's the same rule as the water trough: being able to do a thing is not permission to do it. I'm the approval the whole system is built around — and in a minute you'll watch me be exactly that."
+          "notes": "Here's the best part — this app practises what we preach. It has its own agents that read your feedback and propose new and clearer missions. Now those agents could churn out content all night. But not one word reaches you until I open the queue, read it like a sceptic, and approve it. That's the same rule as the Reservoir: everyone CAN edit it, but only Yas is allowed to — being able to do a thing is not permission to do it. I'm the approval the whole system is built around — and in a minute you'll watch me be exactly that."
         },
         {
           "title": "Live: read the queue, make the call",
@@ -5926,14 +5926,14 @@
         {
           "title": "The capstone — TRACE, and write down how you got the number",
           "visual": "📝",
-          "body": "**Check the flock at the gate before you shut it.**\n\n- **T**raceable · **R**eal · **A**ccurate to intent · **C**ontained · **E**nough to act\n- Then write down HOW you got the number — show the query, name the source\n- A number nobody can retrace is a number nobody should trust",
-          "notes": "TRACE has been with us since day one, and it's the same five checks now — even when the thing being checked is a whole workflow you built. Did it actually look? Are the numbers real? Did it answer the exact question? Did it stay read-only with no private data pasted in? And would you act on it as-is? The one thing I'll add today: write down how you got the number. Show the query, name the shelf you took it from. If you can't retrace it, neither can anyone else — and that's a number we don't ship."
+          "body": "**Check the result before you act on it.**\n\n- **T**raceable · **R**eal · **A**ccurate to intent · **C**ontained · **E**nough to act\n- Then write down HOW you got the number — show the query, name the source\n- A number nobody can retrace is a number nobody should trust",
+          "notes": "TRACE has been with us since day one, and it's the same five checks now — even when the thing being checked is a whole workflow you built. Did it actually look? Are the numbers real? Did it answer the exact question? Did it stay read-only with no private data pasted in? And would you act on it as-is? The one thing I'll add today: write down how you got the number. Show the BigQuery query, name the table it came from. If you can't retrace it, neither can anyone else — and that's a number we don't ship."
         },
         {
           "title": "Now go build — and validate",
-          "visual": "🐑",
-          "body": "**Your turn at the gate.**\n\n- Open YOUR Session 4 mission in the app\n- Start from the template — change one or two knobs — run it on read-only data\n- Score your own output with TRACE\n- End by asking: would one prompt have been faster?",
-          "notes": "That's the teaching done — now you build. Each of you has a Session 4 mission waiting: you'll start from a ready-made template, change just a knob or two, run it safely against read-only data, and then run TRACE on the thing you just built. And finish every one by asking the egg question — would a single prompt have done this faster? If yes, that's not a failure, that's you learning judgment. Off you go — open your mission and let's build a little farm team each."
+          "visual": "🚀",
+          "body": "**Your turn.**\n\n- Open YOUR Session 4 mission in the app\n- Start from the template — change one or two knobs — run it on read-only data\n- Score your own output with TRACE\n- End by asking: would one prompt have been faster?",
+          "notes": "That's the teaching done — now you build. Each of you has a Session 4 mission waiting: you'll start from a ready-made template, change just a knob or two, run it safely against read-only data, and then run TRACE on the thing you just built. And finish every one by asking the question — would a single prompt have done this faster? If yes, that's not a failure, that's you learning judgment. Off you go — open your mission and let's each build a little multi-agent workflow."
         }
       ]
     }
